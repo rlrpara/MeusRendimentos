@@ -15,7 +15,7 @@ namespace MeusRendimentos.Domain.Entities
         public string Icone { get; set; }
 
         [Column("TIPO_ID", Order = 3)]
-        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true, ChaveEstrangeira = "TIPO")]
+        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false, ChaveEstrangeira = "TIPO")]
         public string TipoId { get; set; }
     }
 }
