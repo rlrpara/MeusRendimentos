@@ -1,4 +1,6 @@
-﻿using MeusRendimentos.Services.Interfaces;
+﻿using MeusRendimentos.Domain.Interfaces;
+using MeusRendimentos.Infra.Data.Repositories;
+using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,21 +18,21 @@ namespace MeusRendimentos.Infra.CrossCutting
 
             #region Services
             services.AddTransient<ICartaoService, CartaoService>();
-            services.AddTransient<IEmpresaService, EmpresaService>();
-            services.AddTransient<IPassageiroService, PassageiroService>();
-            services.AddTransient<IPassagemService, PassagemService>();
-            services.AddTransient<ITipoPassagemService, TipoPassagemService>();
-            services.AddTransient<ITrajetoService, TrajetoService>();
+            services.AddTransient<ICategoriaService, CategoriaService>();
+            services.AddTransient<IDespesaService, DespesaService>();
+            services.AddTransient<IGanhoService, GanhoService>();
+            services.AddTransient<ILoginService, LoginService>();
+            services.AddTransient<IMesService, MesService>();
+            services.AddTransient<ITipoService, TipoService>();
             services.AddTransient<IUsuarioService, UsuarioService>();
-            services.AddTransient<IViagemService, ViagemService>();
 
             #endregion
 
             #region Repositories
-            services.AddTransient<IEmbarcacaoRepository, EmbarcacaoRepository>();
-            services.AddTransient<IEmpresaRepository, EmpresaRepository>();
-            services.AddTransient<IPassagemRepository, PassagemRepository>();
-            services.AddTransient<IPassageiroRepository, PassageiroRepository>();
+            services.AddTransient<ICartaoRepository, CartaoRepository>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+            services.AddTransient<IDespesaRepository, DespesaRepository>();
+            services.AddTransient<IGanhoRepository, GanhoRepository>();
             services.AddTransient<ITipoPassagemRepository, TipoPassagemRepository>();
             services.AddTransient<ITrajetoRepository, TrajetoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();

@@ -11,16 +11,16 @@ using System.Linq;
 
 namespace MeusRendimentos.Services.Services
 {
-    public class CartaoService : BaseService, ICartaoService
+    public class DespesaService : BaseService, IDespesaService
     {
         #region Propriedades Privadas
         private readonly IMapper _mapper;
-        private readonly ICartaoRepository _repositorio;
+        private readonly IDespesaRepository _repositorio;
 
         #endregion
 
         #region Construtor
-        public CartaoService(ICartaoRepository repositorio, IMapper mapper)
+        public DespesaService(IDespesaRepository repositorio, IMapper mapper)
             : base(repositorio)
         {
             _repositorio = repositorio;
@@ -29,46 +29,46 @@ namespace MeusRendimentos.Services.Services
         #endregion
 
         #region Métodos Públicos
-        public List<CartaoModel> GetAll()
+        public List<DespesaModel> GetAll()
         {
-            var dadosCartao = _repositorio.BuscarTodosPorQueryGerador<Cartao>("").ToList();
+            var dadosDespesa = _repositorio.BuscarTodosPorQueryGerador<Despesa>("").ToList();
 
-            return (dadosCartao.Count == 0 ? new List<CartaoModel>() : _mapper.Map<List<CartaoModel>>(dadosCartao));
+            return (dadosDespesa.Count == 0 ? new List<DespesaModel>() : _mapper.Map<List<DespesaModel>>(dadosDespesa));
         }
 
-        public CartaoModel GetById(string id)
+        public DespesaModel GetById(string id)
         {
             if (!id.IsNumeric() || string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException("Código inválido");
 
-            return _repositorio.BuscarPorId<Cartao>(int.Parse(id)) == null ? null : _mapper.Map<CartaoModel>(_repositorio.BuscarPorId<Cartao>(int.Parse(id)));
+            return _repositorio.BuscarPorId<Despesa>(int.Parse(id)) == null ? null : _mapper.Map<DespesaModel>(_repositorio.BuscarPorId<Despesa>(int.Parse(id)));
         }
 
-        public bool Post(CartaoModel CartaoModel)
+        public bool Post(DespesaModel DespesaModel)
         {
-            if (CartaoModel.Codigo != 0 && CartaoModel.Codigo != null)
+            if (DespesaModel.Codigo != 0 && DespesaModel.Codigo != null)
                 throw new ArgumentException("O Código deve ser nulo");
 
             //verificar se existe o codigo da empresa informada
 
-            Validator.ValidateObject(CartaoModel, new ValidationContext(CartaoModel), true);
+            Validator.ValidateObject(DespesaModel, new ValidationContext(DespesaModel), true);
 
-            return (_repositorio.Adicionar(_mapper.Map<Cartao>(CartaoModel)) > 0);
+            return (_repositorio.Adicionar(_mapper.Map<Despesa>(DespesaModel)) > 0);
         }
 
-        public bool Put(CartaoModel CartaoModel)
+        public bool Put(DespesaModel DespesaModel)
         {
-            if (CartaoModel.Codigo == 0)
+            if (DespesaModel.Codigo == 0)
                 throw new ArgumentException("Código inválido");
 
-            return (_repositorio.Atualizar(CartaoModel.Codigo ?? 0, _mapper.Map<Cartao>(CartaoModel)) > 0);
+            return (_repositorio.Atualizar(DespesaModel.Codigo ?? 0, _mapper.Map<Despesa>(DespesaModel)) > 0);
         }
         public bool Delete(string id)
         {
             if (!id.IsNumeric())
                 throw new ArgumentException("Código não informado.");
 
-            return (_repositorio.Excluir<Cartao>(int.Parse(id)) > 0);
+            return (_repositorio.Excluir<Despesa>(int.Parse(id)) > 0);
         }
         #endregion
     }
