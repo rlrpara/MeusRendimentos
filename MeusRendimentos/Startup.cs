@@ -1,3 +1,4 @@
+using MeusRendimentos.Services.AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace MeusRendimentos
             {
                 diretorio.RootPath = "MeusRendimentosUi";
             });
+            services.AddAutoMapper(typeof(AutoMapperSetup));
             services.AddControllers()
                 .AddJsonOptions(x => {
                     x.JsonSerializerOptions.IgnoreNullValues = true;

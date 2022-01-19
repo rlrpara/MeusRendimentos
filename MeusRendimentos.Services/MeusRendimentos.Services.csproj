@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MeusRendimentos.Domain\MeusRendimentos.Domain.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
+    <ProjectReference Include="..\QueroBilhete.Infra.Utilities\QueroBilhete.Infra.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

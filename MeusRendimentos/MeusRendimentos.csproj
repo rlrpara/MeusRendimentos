@@ -9,12 +9,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="dotenv.net" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.22" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.22" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
   </ItemGroup>
 
