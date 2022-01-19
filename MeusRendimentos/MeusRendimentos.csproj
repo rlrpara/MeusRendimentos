@@ -14,5 +14,9 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.22" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>
