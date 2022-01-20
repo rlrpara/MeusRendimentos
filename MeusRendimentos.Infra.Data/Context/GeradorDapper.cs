@@ -112,68 +112,12 @@ namespace MeusRendimentos.Infra.Data.Context
             switch (nomeTabela.ToLower())
             {
                 case "usuario":
-                    sqlInsert.AppendLine("INSERT INTO usuario (          NOME,             EMAIL, SENHA, ID_NIVEL_ACESSO)");
-                    sqlInsert.AppendLine("             VALUES ('Administrador', 'admin@email.com', '123',               1)");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (           NOME,             EMAIL, SENHA)");
+                    sqlInsert.AppendLine($"                            VALUES ('Administrador', 'admin@email.com', '123')");
                     break;
-                case "nivel_acesso":
-                    sqlInsert.AppendLine("INSERT INTO nivel_acesso(        TITULO,       DESCRICAO)");
-                    sqlInsert.AppendLine("                  VALUES('ADMINISTRADOR', 'ADMINISTRADOR');");
-                    sqlInsert.AppendLine("INSERT INTO nivel_acesso(       TITULO,      DESCRICAO)");
-                    sqlInsert.AppendLine("                  VALUES('PROPRIETARIO', 'PROPRIETARIO');");
-                    sqlInsert.AppendLine("INSERT INTO nivel_acesso(   TITULO,  DESCRICAO)");
-                    sqlInsert.AppendLine("                  VALUES('VENDEDOR', 'VENDEDOR')");
-                    break;
-                case "empresa":
-                    sqlInsert.AppendLine("INSERT INTO empresa (RAZAO_SOCIAL,             CNPJ, TIPO_REGIME_ID, AMBIENTE_ID)");
-                    sqlInsert.AppendLine("              VALUES(    'PADRAO', '00000000000000',              1,           1)");
-                    break;
-                case "alinhamento":
-                    sqlInsert.AppendLine("INSERT INTO alinhamento(     NOME)");
-                    sqlInsert.AppendLine("                 VALUES('DIREITA');");
-                    sqlInsert.AppendLine("INSERT INTO alinhamento(      NOME)");
-                    sqlInsert.AppendLine("                 VALUES('ESQUERDA');");
-                    break;
-                case "tipo_passagem":
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('INTEIRA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('MEIA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('IDOSO');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('CRIANCA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('POLICIA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('PESSOA COM DEFICIENCIA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('PREFEITURA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('VEREADOR');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('PATROCINIO');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_passagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                   VALUES ('OUTROS');");
-                    break;
-                case "tipo_regime_empresa":
-                    sqlInsert.AppendLine("INSERT INTO tipo_regime_empresa (DESCRICAO)");
-                    sqlInsert.AppendLine("                         VALUES ('1 – SIMPLES NACIONAL');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_regime_empresa (DESCRICAO)");
-                    sqlInsert.AppendLine("                         VALUES ('2 – SIMPLES NACIONAL – EXCESSO DE SUBLIMITE DE RECEITA BRUTA');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_regime_empresa (DESCRICAO)");
-                    sqlInsert.AppendLine("                         VALUES ('3 – REGIME NORMAL');");
-                    break;
-                case "tipo_viagem":
-                    sqlInsert.AppendLine("INSERT INTO tipo_viagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                 VALUES ('00-REGULAR');");
-                    sqlInsert.AppendLine("INSERT INTO tipo_viagem (DESCRICAO)");
-                    sqlInsert.AppendLine("                 VALUES ('01-EXTRA');");
-                    break;
-                case "ambiente_servidor":
-                    sqlInsert.AppendLine("INSERT INTO ambiente_servidor (NOME)");
-                    sqlInsert.AppendLine("                       VALUES ('HOMOLOGACAO');");
-                    sqlInsert.AppendLine("INSERT INTO ambiente_servidor (NOME)");
-                    sqlInsert.AppendLine("                       VALUES ('PRODUCAO');");
+                case "tipo":
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} ( DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (   'Teste')");
                     break;
                 default:
                     break;

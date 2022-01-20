@@ -1,4 +1,5 @@
 using MeusRendimentos.Infra.CrossCutting;
+using MeusRendimentos.Infra.Database;
 using MeusRendimentos.Infra.Swagger;
 using MeusRendimentos.Services.AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,7 @@ namespace MeusRendimentos
             services.AddAutoMapper(typeof(AutoMapperSetup));
             services.AddSwaggerConfiguration();
             NativeInjector.RegisterServices(services, Configuration);
+            DatabaseConfiguration.GerenciarBanco();
             services.AddControllers()
                 .AddJsonOptions(x => {
                     x.JsonSerializerOptions.IgnoreNullValues = true;

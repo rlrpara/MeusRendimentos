@@ -16,6 +16,6 @@ namespace MeusRendimentos.Domain.Entities
 
         [Column("TIPO_ID", Order = 3)]
         [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false, ChaveEstrangeira = "TIPO")]
-        public string TipoId { get; set; }
+        public int TipoId { get; set; }
     }
 }

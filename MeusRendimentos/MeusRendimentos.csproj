@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeusRendimentos.Infra.CrossCutting\MeusRendimentos.Infra.CrossCutting.csproj" />
+    <ProjectReference Include="..\MeusRendimentos.Infra.Database\MeusRendimentos.Infra.Database.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Swagger\MeusRendimentos.Infra.Swagger.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
