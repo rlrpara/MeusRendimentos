@@ -1,6 +1,7 @@
 ﻿using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -8,14 +9,14 @@ namespace MeusRendimentos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
         #region [Propriedades Privadas]
-        private readonly IUsuarioService _service;
+        private readonly ICategoriaService _service;
         #endregion
 
         #region [Construtor]
-        public UsuarioController(IUsuarioService service)
+        public CategoriaController(ICategoriaService service)
             => _service = service;
         #endregion
 
@@ -27,7 +28,7 @@ namespace MeusRendimentos.Controllers
         public IActionResult GetId(string id) => Ok(_service.GetById(id));
 
         [HttpPost]
-        public IActionResult Post([FromBody] UsuarioModel entidade)
+        public IActionResult Post([FromBody] CategoriaModel entidade)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +45,7 @@ namespace MeusRendimentos.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] UsuarioModel entidade)
+        public IActionResult Put([FromBody] CategoriaModel entidade)
         {
             if (ModelState.IsValid)
             {

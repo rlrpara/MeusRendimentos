@@ -86,6 +86,7 @@ namespace MeusRendimentos.Infra.Database
 
                     //Criar tabelas
                     Criar(conexao, ObterProcedureDropConstraint(nomeBanco));
+                    Criar(conexao, GeradorDapper.CriarTabela<Funcao>(nomeBanco));
                     Criar(conexao, GeradorDapper.CriarTabela<Usuario>(nomeBanco));
                     Criar(conexao, GeradorDapper.CriarTabela<Tipo>(nomeBanco));
                     Criar(conexao, GeradorDapper.CriarTabela<Mes>(nomeBanco));
@@ -95,13 +96,17 @@ namespace MeusRendimentos.Infra.Database
                     Criar(conexao, GeradorDapper.CriarTabela<Ganho>(nomeBanco));
 
                     //Criar procedures
-                    Criar(conexao, GeradorDapper.GerarProcedureAddIfColumnNotExists(nomeBanco));
+                    Criar(conexao, GeradorDapper.GerarProcedureIfColumnNotExists(nomeBanco));
 
                     //Adicionar registros base
+                    if (!ExisteDados<Funcao>(conexao))
+                        Criar(conexao, GeradorDapper.InserirDadosPadroes<Funcao>());
                     if (!ExisteDados<Usuario>(conexao))
                         Criar(conexao, GeradorDapper.InserirDadosPadroes<Usuario>());
                     if (!ExisteDados<Tipo>(conexao))
                         Criar(conexao, GeradorDapper.InserirDadosPadroes<Tipo>());
+                    if (!ExisteDados<Mes>(conexao))
+                        Criar(conexao, GeradorDapper.InserirDadosPadroes<Mes>());
 
 
                     //executar scripts da versao

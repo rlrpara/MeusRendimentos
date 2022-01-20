@@ -112,12 +112,42 @@ namespace MeusRendimentos.Infra.Data.Context
             switch (nomeTabela.ToLower())
             {
                 case "usuario":
-                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (           NOME,             EMAIL, SENHA)");
-                    sqlInsert.AppendLine($"                            VALUES ('Administrador', 'admin@email.com', '123')");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (           NOME,             EMAIL, SENHA, FUNCAO_ID)");
+                    sqlInsert.AppendLine($"                            VALUES ('Administrador', 'admin@email.com', '123',         1)");
                     break;
                 case "tipo":
                     sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} ( DESCRICAO)");
                     sqlInsert.AppendLine($"                            VALUES (   'Teste')");
+                    break;
+                case "mes":
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (   'JANEIRO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES ( 'FEVEREIRO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (     'MARÇO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (     'ABRIL');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (      'MAIO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (     'JUNHO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (     'JULHO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (    'AGOSTO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (  'SETEMBRO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (   'OUTUBRO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (  'NOVEMBRO');");
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (   DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES (  'DEZEMBRO');");
+                    break;
+                case "funcao":
+                    sqlInsert.AppendLine($"INSERT INTO {nomeTabela.ToLower()} (           NOME,                  DESCRICAO)");
+                    sqlInsert.AppendLine($"                            VALUES ('Administrador', 'Administrador do Sistema')");
                     break;
                 default:
                     break;
@@ -225,7 +255,7 @@ namespace MeusRendimentos.Infra.Data.Context
             return sqlInsert.ToString();
         }
 
-        public static string GerarProcedureAddIfColumnNotExists(string nomeBanco)
+        public static string GerarProcedureIfColumnNotExists(string nomeBanco)
         {
             var sqlPesquisa = new StringBuilder();
 

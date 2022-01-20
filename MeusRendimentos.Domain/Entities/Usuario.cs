@@ -25,5 +25,9 @@ namespace MeusRendimentos.Domain.Entities
         [Column("FOTO", Order = 5)]
         [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
         public byte[] Foto { get; set; }
+
+        [Column("FUNCAO_ID", Order = 6)]
+        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true, ChaveEstrangeira = "FUNCAO")]
+        public int FuncaoId { get; set; }
     }
 }
