@@ -3,7 +3,7 @@ using MeusRendimentos.Domain.Entities;
 using MeusRendimentos.Domain.Interfaces;
 using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Models;
-using QueroBilhete.Infra.Utilities.ExtensionMethods;
+using MeusRendimentos.Infra.Utilities.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

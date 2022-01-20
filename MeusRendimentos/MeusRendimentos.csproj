@@ -2,11 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>api-doc.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
@@ -17,8 +15,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MeusRendimentos.Infra.CrossCutting\MeusRendimentos.Infra.CrossCutting.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
+    <ProjectReference Include="..\MeusRendimentos.Infra.Swagger\MeusRendimentos.Infra.Swagger.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 

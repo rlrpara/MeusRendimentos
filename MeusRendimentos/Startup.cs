@@ -1,6 +1,9 @@
+using MeusRendimentos.Infra.CrossCutting;
+using MeusRendimentos.Infra.Swagger;
 using MeusRendimentos.Services.AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,9 +25,11 @@ namespace MeusRendimentos
             services.AddCors();
             services.AddSpaStaticFiles(diretorio =>
             {
-                diretorio.RootPath = "MeusRendimentosUi";
+                diretorio.RootPath = "MeusRendimentosUi/dist";
             });
             services.AddAutoMapper(typeof(AutoMapperSetup));
+            services.AddSwaggerConfiguration();
+            NativeInjector.RegisterServices(services, Configuration);
             services.AddControllers()
                 .AddJsonOptions(x => {
                     x.JsonSerializerOptions.IgnoreNullValues = true;
@@ -61,10 +66,13 @@ namespace MeusRendimentos
 
             app.UseSpa(x =>
             {
-                x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), "MeusRendimentosUi");
+                //x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), "MeusRendimentosUi");
+                x.Options.SourcePath = "MeusRendimentosUi";
 
                 if (env.IsDevelopment())
+                {
                     x.UseProxyToSpaDevelopmentServer($"http://localhost:4200");
+                }
             });
         }
     }

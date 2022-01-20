@@ -1,4 +1,4 @@
-﻿namespace QueroBilhete.Infra.Utilities.ExtensionMethods
+﻿namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
 {
     public static class IntExtensions
     {

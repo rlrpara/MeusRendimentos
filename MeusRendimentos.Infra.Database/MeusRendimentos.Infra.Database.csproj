@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <None Remove="DatabaseConfiguration.cs~RF18d2cc2.TMP" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MeusRendimentos.Domain\MeusRendimentos.Domain.csproj" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="MySql.Data" Version="8.0.27" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
-    <ProjectReference Include="..\QueroBilhete.Infra.Utilities\MeusRendimentos.Infra.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

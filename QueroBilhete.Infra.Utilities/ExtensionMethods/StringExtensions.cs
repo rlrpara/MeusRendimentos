@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace QueroBilhete.Infra.Utilities.ExtensionMethods
+namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
 {
     public static class StringExtensions
     {

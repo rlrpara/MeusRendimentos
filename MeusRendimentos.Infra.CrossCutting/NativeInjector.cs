@@ -4,9 +4,6 @@ using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MeusRendimentos.Infra.CrossCutting
 {
@@ -33,10 +30,10 @@ namespace MeusRendimentos.Infra.CrossCutting
             services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<IDespesaRepository, DespesaRepository>();
             services.AddTransient<IGanhoRepository, GanhoRepository>();
-            services.AddTransient<ITipoPassagemRepository, TipoPassagemRepository>();
-            services.AddTransient<ITrajetoRepository, TrajetoRepository>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<IMesRepository, MesRepository>();
+            services.AddTransient<ITipoRepository, TipoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-            services.AddTransient<IViagemRepository, ViagemRepository>();
             services.AddTransient<IBaseRepository, BaseRepository>();
 
             #endregion
