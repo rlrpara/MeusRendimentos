@@ -66,7 +66,7 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
             DataAtualizacao = DateTime.Now
         };
 
-        public CartaoModel ObterNooaCartaoDadosIncompletos() => new CartaoModel()
+        public CartaoModel ObterNovoCartaoDadosIncompletos() => new CartaoModel()
         {
             Descricao = "Master"
         };

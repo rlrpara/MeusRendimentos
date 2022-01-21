@@ -8,22 +8,22 @@ using Moq;
 using System;
 using Xunit;
 
-namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
+namespace MeusRendimentos.Test.ServiceTests.CategoriaServiceTests
 {
-    [Trait("Services", "CartaoService")]
-    public class CartaoServiceTest : CartaoServiceTestBase
+    [Trait("Services", "CategoriaService")]
+    public class CategoriaServiceTest : CategoriaServiceTestBase
     {
         #region Propriedades Privadas
-        private CartaoService _service;
+        private CategoriaService _service;
 
         #endregion
 
         #region Construtor
-        public CartaoServiceTest()
+        public CategoriaServiceTest()
         {
-            var moqCartaoRepositorio = new Mock<ICartaoRepository>().Object;
+            var moqCategoriaRepositorio = new Mock<ICategoriaRepository>().Object;
             var moqMapper = new Mock<IMapper>().Object;
-            _service = new CartaoService(moqCartaoRepositorio, moqMapper);
+            _service = new CategoriaService(moqCategoriaRepositorio, moqMapper);
         }
 
         #endregion
@@ -40,18 +40,18 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
         [Fact(DisplayName = "Deve instanciar o objeto.")]
         public void InstanciarObjeto()
         {
-            var cartaoMock = new Mock<ICartaoRepository>();
+            var CategoriaMock = new Mock<ICategoriaRepository>();
             var mapperMock = ObterMapperConfig();
 
-            var CartaoRepository = new CartaoService(cartaoMock.Object, mapperMock);
+            var CategoriaRepository = new CategoriaService(CategoriaMock.Object, mapperMock);
 
-            Assert.True(CartaoRepository != null);
+            Assert.True(CategoriaRepository != null);
         }
 
         [Fact(DisplayName = "Deve invalidar ao enviar Id via método Post")]
         public void DeveInvalidarEnviarIDViaMetodoPost()
         {
-            var exception = Assert.Throws<ArgumentException>(() => _service.Post(new CartaoModel { Codigo = 1 }));
+            var exception = Assert.Throws<ArgumentException>(() => _service.Post(new CategoriaModel { Codigo = 1 }));
 
             Assert.Equal("O Código deve ser nulo", exception.Message);
         }
@@ -67,7 +67,7 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
         [Fact(DisplayName = "Deve invalidar ao enviar id vazia ou nulla via Put")]
         public void DeveInvalidarEnviarIDVaziaNulaViaPut()
         {
-            var exception = Assert.Throws<ArgumentException>(() => _service.Put(new CartaoModel()));
+            var exception = Assert.Throws<ArgumentException>(() => _service.Put(new CategoriaModel()));
 
             Assert.Equal("Código não informado.", exception.Message);
         }
@@ -80,43 +80,34 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
             Assert.Equal("Código não informado.", exception.Message);
         }
 
-        [Fact(DisplayName = "Deve enviar um objeto válido via Post")]
-        public void DeveEnviarUmObjetoValidoViaPost()
-        {
-            var envio = _service.Post(ObterNovoCartao());
-
-            Assert.False(envio);
-        }
-
         [Fact(DisplayName = "Deve retornar uma lista maior que 0 via GetAll")]
         public void DeveRetornarListaMaiorQueZeroViaGetAll()
         {
-            var CartaoRepository = new Mock<ICartaoRepository>();
+            var CategoriaRepository = new Mock<ICategoriaRepository>();
 
-            CartaoRepository.Setup(x => x.BuscarTodosPorQueryGerador<Cartao>("")).Returns(ObterListaCartaos());
+            CategoriaRepository.Setup(x => x.BuscarTodosPorQueryGerador<Categoria>("")).Returns(ObterListaCategorias());
 
-            var resultado = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetAll();
+            var resultado = new CategoriaService(CategoriaRepository.Object, ObterMapperConfig()).GetAll();
 
             Assert.True(resultado.Count > 0);
         }
 
-        [Fact(DisplayName = "Deve retornar um Cartao quando informado seu código válido via GetById")]
-        public void DeveRetornarUmCartaoQuandoInformadoSeuCodigoValidoViaGetById()
+        [Fact(DisplayName = "Deve retornar um Categoria quando informado seu código válido via GetById")]
+        public void DeveRetornarUmCategoriaQuandoInformadoSeuCodigoValidoViaGetById()
         {
-            var CartaoRepository = new Mock<ICartaoRepository>();
+            var CategoriaRepository = new Mock<ICategoriaRepository>();
 
-            CartaoRepository.Setup(x => x.BuscarPorId<Cartao>(1)).Returns(ObterCartao1());
+            CategoriaRepository.Setup(x => x.BuscarPorId<Categoria>(1)).Returns(ObterCategoria1());
 
-            var Cartao = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetById("1");
+            var Categoria = new CategoriaService(CategoriaRepository.Object, ObterMapperConfig()).GetById("1");
 
-            Assert.Equal("Master", Cartao.Descricao);
+            Assert.Equal("Master", Categoria.Descricao);
         }
 
         [Fact(DisplayName = "Deve invalidar quando não enviar um campo obrigatório via Post")]
         public void DeveInvalidaQuandoNaoEnviaCampoObrigatorioViaPost()
         {
-            Assert.Equal("O Código deve ser nulo", Assert.Throws<ArgumentException>(() => _service.Post(ObterNovoCartaoDadosIncompletos())).Message);
+            Assert.Equal("O Código deve ser nulo", Assert.Throws<ArgumentException>(() => _service.Post(ObterNovaCategoriaDadosIncompletos())).Message);
         }
-
     }
 }

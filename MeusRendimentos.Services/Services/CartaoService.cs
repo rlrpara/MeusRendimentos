@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MeusRendimentos.Domain.Entities;
 using MeusRendimentos.Domain.Interfaces;
+using MeusRendimentos.Infra.Utilities.ExtensionMethods;
 using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Models;
-using MeusRendimentos.Infra.Utilities.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -57,7 +57,7 @@ namespace MeusRendimentos.Services.Services
         public bool Put(CartaoModel CartaoModel)
         {
             if (CartaoModel.Codigo == 0 || CartaoModel.Codigo == null)
-                throw new ArgumentException("Campo obrigatório");
+                throw new ArgumentException("Código não informado.");
 
             return (_repositorio.Atualizar(CartaoModel.Codigo ?? 0, _mapper.Map<Cartao>(CartaoModel)) > 0);
         }
