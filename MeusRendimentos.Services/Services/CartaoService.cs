@@ -46,10 +46,8 @@ namespace MeusRendimentos.Services.Services
 
         public bool Post(CartaoModel CartaoModel)
         {
-            if (CartaoModel.Codigo != 0 && CartaoModel.Codigo != null)
+            if (CartaoModel.Codigo != null)
                 throw new ArgumentException("O Código deve ser nulo");
-
-            //verificar se existe o codigo da empresa informada
 
             Validator.ValidateObject(CartaoModel, new ValidationContext(CartaoModel), true);
 
@@ -58,8 +56,8 @@ namespace MeusRendimentos.Services.Services
 
         public bool Put(CartaoModel CartaoModel)
         {
-            if (CartaoModel.Codigo == 0)
-                throw new ArgumentException("Código inválido");
+            if (CartaoModel.Codigo == 0 || CartaoModel.Codigo == null)
+                throw new ArgumentException("Campo obrigatório");
 
             return (_repositorio.Atualizar(CartaoModel.Codigo ?? 0, _mapper.Map<Cartao>(CartaoModel)) > 0);
         }
