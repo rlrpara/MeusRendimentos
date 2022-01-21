@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
+  </ItemGroup>
+
 </Project>
