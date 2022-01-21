@@ -10,7 +10,7 @@ namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
     {
         public static string RemoveAcentos(this string valor)
         {
-            return (valor == null) ? valor : new string(valor.Normalize(NormalizationForm.FormD).Where(ch => char.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark).ToArray()).ToUpper();
+            return !string.IsNullOrEmpty(valor) ? new string(valor.Normalize(NormalizationForm.FormD).Where(ch => char.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark).ToArray()).ToUpper() : valor;
         }
 
         public static string ApenasNumeros(this string valor)
