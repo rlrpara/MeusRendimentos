@@ -4,6 +4,17 @@
         <name>MeusRendimentos</name>
     </assembly>
     <members>
+        <member name="M:MeusRendimentos.Controllers.LoginController.PostLogin(System.String,System.String)">
+            <summary>
+            Método para logar no sistema
+            </summary>
+            <param name="email">Login de acesso</param>
+            <param name="senha">Senha de acesso</param>
+            <response code="200">Retorna com sucesso na requisição</response>
+            <response code="400">Retorna quando não informado o UID</response>
+            <response code="404">Retorna como dados não encontrados</response>
+            <returns></returns>
+        </member>
         <member name="T:MeusRendimentos.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

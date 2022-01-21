@@ -9,6 +9,6 @@ namespace MeusRendimentos.Services.Interfaces
         CartaoModel GetById(string id);
         bool Post(CartaoModel CartaoModel);
         bool Put(CartaoModel CartaoModel);
-        bool Delete(string id)
+        bool Delete(string id);
     }
 }

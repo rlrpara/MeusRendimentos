@@ -8,14 +8,14 @@ namespace MeusRendimentos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class TipoController : ControllerBase
     {
         #region [Propriedades Privadas]
-        private readonly ICategoriaService _service;
+        private readonly ITipoService _service;
         #endregion
 
         #region [Construtor]
-        public CategoriaController(ICategoriaService service)
+        public TipoController(ITipoService service)
             => _service = service;
         #endregion
 
@@ -27,7 +27,7 @@ namespace MeusRendimentos.Controllers
         public IActionResult GetId(string id) => Ok(_service.GetById(id));
 
         [HttpPost]
-        public IActionResult Post([FromBody] CategoriaModel entidade)
+        public IActionResult Post([FromBody] TipoModel entidade)
         {
             if (ModelState.IsValid)
             {
@@ -44,7 +44,7 @@ namespace MeusRendimentos.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] CategoriaModel entidade)
+        public IActionResult Put([FromBody] TipoModel entidade)
         {
             if (ModelState.IsValid)
             {

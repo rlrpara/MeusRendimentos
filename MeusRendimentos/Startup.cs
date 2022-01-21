@@ -4,11 +4,9 @@ using MeusRendimentos.Infra.Swagger;
 using MeusRendimentos.Services.AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 
 namespace MeusRendimentos
 {
@@ -52,6 +50,8 @@ namespace MeusRendimentos
             {
                 x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
+
+            app.UseSwaggerConfiguration();
 
             app.UseRouting();
 

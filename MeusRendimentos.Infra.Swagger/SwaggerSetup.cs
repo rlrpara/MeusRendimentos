@@ -13,9 +13,9 @@ namespace MeusRendimentos.Infra.Swagger
             return services.AddSwaggerGen(x => {
                 x.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Quero Bilhete!",
+                    Title = "Meus Rendimentos!",
                     Version = "v1",
-                    Description = "Api de venda de passagens desenvolvida em .Net Core 3.1",
+                    Description = "Api de controle financeiro desenvolvida em .Net Core 3.1",
                     Contact = new OpenApiContact
                     {
                         Name = "Rodrigo de L. Ribeiro",

@@ -23,7 +23,7 @@ namespace MeusRendimentos.Services.Services
         #region Métodos Públicos
         public LoginModel logar(string email, string senha)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<LoginModel>(_repositorio.logar(email, senha));
         }
         #endregion
     }
