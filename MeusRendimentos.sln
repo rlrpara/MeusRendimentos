@@ -29,15 +29,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Cross
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.03-Utilities", "04.03-Utilities", "{CADEB9F7-F2F3-4A3B-9E04-7D0DBFC66F02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeusRendimentos.Infra.Utilities", "QueroBilhete.Infra.Utilities\MeusRendimentos.Infra.Utilities.csproj", "{3F4DC8F0-4E27-4B51-9776-EB38A00C8F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Utilities", "QueroBilhete.Infra.Utilities\MeusRendimentos.Infra.Utilities.csproj", "{3F4DC8F0-4E27-4B51-9776-EB38A00C8F30}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.04-Swagger", "04.04-Swagger", "{ECE437F4-CCA9-486A-916D-2638690E9B4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeusRendimentos.Infra.Swagger", "MeusRendimentos.Infra.Swagger\MeusRendimentos.Infra.Swagger.csproj", "{24442000-4A83-47C3-8082-4E735ED8362A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Swagger", "MeusRendimentos.Infra.Swagger\MeusRendimentos.Infra.Swagger.csproj", "{24442000-4A83-47C3-8082-4E735ED8362A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.05-Database", "04.05-Database", "{C56867B4-6711-4FAF-8EB3-C6B1095B64CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeusRendimentos.Infra.Database", "MeusRendimentos.Infra.Database\MeusRendimentos.Infra.Database.csproj", "{C35627F0-5ACB-4783-AED0-9657938A43B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Database", "MeusRendimentos.Infra.Database\MeusRendimentos.Infra.Database.csproj", "{C35627F0-5ACB-4783-AED0-9657938A43B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeusRendimentos.Test", "MeusRendimentos.Test\MeusRendimentos.Test.csproj", "{7C061B50-EC1F-41C2-81C5-9E533D8CA107}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{C35627F0-5ACB-4783-AED0-9657938A43B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35627F0-5ACB-4783-AED0-9657938A43B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C35627F0-5ACB-4783-AED0-9657938A43B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C061B50-EC1F-41C2-81C5-9E533D8CA107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C061B50-EC1F-41C2-81C5-9E533D8CA107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C061B50-EC1F-41C2-81C5-9E533D8CA107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C061B50-EC1F-41C2-81C5-9E533D8CA107}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{24442000-4A83-47C3-8082-4E735ED8362A} = {ECE437F4-CCA9-486A-916D-2638690E9B4E}
 		{C56867B4-6711-4FAF-8EB3-C6B1095B64CA} = {5B8A40A9-4D43-4CFF-BCA6-74D706E2FC4B}
 		{C35627F0-5ACB-4783-AED0-9657938A43B8} = {C56867B4-6711-4FAF-8EB3-C6B1095B64CA}
+		{7C061B50-EC1F-41C2-81C5-9E533D8CA107} = {B88DFED8-A616-4AFA-B8B0-64BF5DAED0A7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4858A419-878D-4A65-85A4-346872232B6B}
