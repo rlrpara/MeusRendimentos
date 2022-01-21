@@ -1,5 +1,4 @@
-﻿using Dapper;
-using MeusRendimentos.Domain.Entities.Base;
+﻿using MeusRendimentos.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,8 +13,6 @@ namespace MeusRendimentos.Infra.Data.Context
     {
         #region Métodos Privados
         private readonly static string _nomeBanco = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
-        private static bool EhBrancoNulo(string valor)
-            => string.IsNullOrWhiteSpace(valor.ToString().Trim());
         public static string ObterColunasGrid<T>(IEnumerable<T> list) where T : class
         {
             string chavePrimaria = string.Empty;
