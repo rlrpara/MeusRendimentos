@@ -16,23 +16,6 @@ namespace MeusRendimentos.Infra.Data.Context
         private readonly static string _nomeBanco = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
         private static bool EhBrancoNulo(string valor)
             => string.IsNullOrWhiteSpace(valor.ToString().Trim());
-        private static DynamicParameters RetornaListaParametros(ColumnAttribute atributo, object valor, string nome)
-        {
-            var listaParametros = new DynamicParameters();
-
-            if (!EhBrancoNulo(atributo?.Name ?? "") && (valor != null) && !valor.ToString().Contains("01/01/0001 12:00:00 AM") && !valor.ToString().Equals("0"))
-            {
-                if (valor is DateTime) listaParametros.Add($"@{nome}", Convert.ToDateTime(valor.ToString()).ToString("yyyy-MM-dd HH:mm:ss"), DbType.DateTime);
-
-                else if (valor is bool) listaParametros.Add($"@{nome}", Convert.ToBoolean(valor), DbType.Boolean);
-
-                else if (valor is int) listaParametros.Add($"@{nome}", Convert.ToInt32(valor), DbType.Int32);
-
-                else if (valor is string) listaParametros.Add($"@{nome}", valor.ToString(), DbType.String);
-            }
-            return listaParametros;
-        }
-
         public static string ObterColunasGrid<T>(IEnumerable<T> list) where T : class
         {
             string chavePrimaria = string.Empty;
@@ -43,11 +26,8 @@ namespace MeusRendimentos.Infra.Data.Context
                 foreach (var item in lista.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
                 {
                     var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
-                    if (opcoesBase != null)
-                    {
-                        if (opcoesBase.UsarParaBuscar && item.GetCustomAttribute<ColumnAttribute>().Name != "")
+                    if (opcoesBase != null && (opcoesBase.UsarParaBuscar && item.GetCustomAttribute<ColumnAttribute>().Name != ""))
                             campos.Add($"{item.GetCustomAttribute<ColumnAttribute>().Name}|{item.Name}|{opcoesBase.TamanhoColunaGrid}|{opcoesBase.UsarNaGrid}");
-                    }
                 }
                 break;
             }

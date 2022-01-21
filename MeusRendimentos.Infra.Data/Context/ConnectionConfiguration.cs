@@ -4,7 +4,7 @@ using System.Data;
 
 namespace MeusRendimentos.Infra.Data.Context
 {
-    public class ConnectionConfiguration
+    public static class ConnectionConfiguration
     {
         #region Métodos Privados
         private static ParametrosConexao ObterParametrosConexao() => new ParametrosConexao()
