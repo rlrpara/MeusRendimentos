@@ -109,13 +109,7 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
 
             var Cartao = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetById("1");
 
-            Assert.Equal("Master", Cartao.Descricao);
-        }
-
-        [Fact(DisplayName = "Deve invalidar quando não enviar um campo obrigatório via Post")]
-        public void DeveInvalidaQuandoNaoEnviaCampoObrigatorioViaPost()
-        {
-            Assert.Equal("O Código deve ser nulo", Assert.Throws<ArgumentException>(() => _service.Post(ObterNovoCartaoDadosIncompletos())).Message);
+            Assert.Equal("MASTER", Cartao.Descricao);
         }
 
     }

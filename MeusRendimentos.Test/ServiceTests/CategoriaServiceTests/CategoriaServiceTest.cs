@@ -64,14 +64,6 @@ namespace MeusRendimentos.Test.ServiceTests.CategoriaServiceTests
             Assert.Equal("Código inválido", exception.Message);
         }
 
-        [Fact(DisplayName = "Deve invalidar ao enviar id vazia ou nulla via Put")]
-        public void DeveInvalidarEnviarIDVaziaNulaViaPut()
-        {
-            var exception = Assert.Throws<ArgumentException>(() => _service.Put(new CategoriaModel()));
-
-            Assert.Equal("Código não informado.", exception.Message);
-        }
-
         [Fact(DisplayName = "Deve invalidar ao enviar id vazia ou nulla via Delete")]
         public void DeveInvalidarEnviarIDVaziaNulaViaDelete()
         {
@@ -104,10 +96,5 @@ namespace MeusRendimentos.Test.ServiceTests.CategoriaServiceTests
             Assert.Equal("Master", Categoria.Descricao);
         }
 
-        [Fact(DisplayName = "Deve invalidar quando não enviar um campo obrigatório via Post")]
-        public void DeveInvalidaQuandoNaoEnviaCampoObrigatorioViaPost()
-        {
-            Assert.Equal("O Código deve ser nulo", Assert.Throws<ArgumentException>(() => _service.Post(ObterNovaCategoriaDadosIncompletos())).Message);
-        }
     }
 }
