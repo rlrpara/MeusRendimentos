@@ -7,7 +7,7 @@ namespace MeusRendimentos.Domain.Entities
     public class Tipo : EntityBase
     {
         [Column("DESCRICAO", Order = 1)]
-        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false)]
+        [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false)]
         public string Descricao { get; set; }
     }
 }

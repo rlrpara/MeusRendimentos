@@ -7,15 +7,15 @@ namespace MeusRendimentos.Domain.Entities
     public class Categoria : EntityBase
     {
         [Column("DESCRICAO", Order = 1)]
-        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
+        [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
         public string Descricao { get; set; }
 
         [Column("ICONE", Order = 2)]
-        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
+        [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
         public string Icone { get; set; }
 
         [Column("TIPO_ID", Order = 3)]
-        [OpcoesBase(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false, ChaveEstrangeira = "TIPO")]
+        [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = false, ChaveEstrangeira = "TIPO")]
         public int TipoId { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace MeusRendimentos.Infra.Data.Context
             {
                 foreach (var item in lista.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
                 {
-                    var opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                    var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
                     if (opcoesBase != null)
                     {
                         if (opcoesBase.UsarParaBuscar && item.GetCustomAttribute<ColumnAttribute>().Name != "")
@@ -64,7 +64,7 @@ namespace MeusRendimentos.Infra.Data.Context
 
             foreach (var item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
             {
-                var opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
                 if (opcoesBase != null)
                 {
                     var tipoCampo = item.PropertyType.Name;
@@ -181,7 +181,7 @@ namespace MeusRendimentos.Infra.Data.Context
 
             foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
             {
-                var opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
                 if (opcoesBase != null)
                 {
                     var tipoCampo = item.PropertyType.Name;
@@ -214,7 +214,7 @@ namespace MeusRendimentos.Infra.Data.Context
             foreach (PropertyInfo item in entidade.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
             {
                 var tipoCampo = item.PropertyType;
-                var opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
 
                 if (opcoesBase != null && opcoesBase.UsarNoBancoDeDados && !opcoesBase.ChavePrimaria)
                 {
@@ -299,7 +299,7 @@ namespace MeusRendimentos.Infra.Data.Context
 
             foreach (PropertyInfo item in entidade.GetType().GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
             {
-                OpcoesBase opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                OpcoesBaseAttribute opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
 
                 if (opcoesBase != null && opcoesBase.UsarNoBancoDeDados && !opcoesBase.ChavePrimaria)
                 {
@@ -352,7 +352,7 @@ namespace MeusRendimentos.Infra.Data.Context
 
             foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
             {
-                OpcoesBase opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                OpcoesBaseAttribute opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
 
                 if (opcoesBase != null && opcoesBase.UsarNoBancoDeDados && opcoesBase.ChavePrimaria)
                     campoChave = item.GetCustomAttribute<ColumnAttribute>().Name;
@@ -374,7 +374,7 @@ namespace MeusRendimentos.Infra.Data.Context
 
             foreach (PropertyInfo item in typeof(T).GetProperties(BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.Public))
             {
-                var opcoesBase = (OpcoesBase)item.GetCustomAttribute(typeof(OpcoesBase));
+                var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
 
                 if (opcoesBase != null)
                 {

@@ -2,7 +2,7 @@
 
 namespace MeusRendimentos.Domain.Entities.Base
 {
-    public class OpcoesBase : Attribute
+    public class OpcoesBaseAttribute : Attribute
     {
         public bool ChavePrimaria { get; set; }
         public bool UsarNoBancoDeDados { get; set; }
