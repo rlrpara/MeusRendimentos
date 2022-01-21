@@ -15,22 +15,25 @@ namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
 
         public static string ApenasNumeros(this string valor)
         {
-            return (valor == null) ? valor : new Regex(@"[^0-9a]").Replace(valor, "").ToString();
+            return !string.IsNullOrEmpty(valor) ? new Regex(@"[^0-9a]").Replace(valor, "").ToString() : valor ;
         }
 
         public static DateTime AjustaData(this DateTime valor)
         {
-            return (valor == null) ? valor : Convert.ToDateTime(valor.ToString("yyyy-MM-dd HH:mm:ss"));
+            if (DateTime.TryParse(valor.ToString(), out _))
+                return Convert.ToDateTime(valor.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            return valor;
         }
 
         public static string EncodeBase64(this string value)
         {
-            return (value == null) ? value : Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
+            return !string.IsNullOrEmpty(value) ? Convert.ToBase64String(Encoding.UTF8.GetBytes(value)) : value;
         }
 
         public static string DecodeBase64(this string value)
         {
-            return (value == null) ? value : Encoding.UTF8.GetString(Convert.FromBase64String(value));
+            return !string.IsNullOrEmpty(value) ? Encoding.UTF8.GetString(Convert.FromBase64String(value)) : value;
         }
     }
 }
