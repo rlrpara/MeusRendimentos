@@ -2,7 +2,6 @@
 using MeusRendimentos.Domain.Interfaces;
 using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Models;
-using System;
 
 namespace MeusRendimentos.Services.Services
 {
