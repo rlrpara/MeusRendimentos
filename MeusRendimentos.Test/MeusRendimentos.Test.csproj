@@ -25,7 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MeusRendimentos.Domain\MeusRendimentos.Domain.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Services\MeusRendimentos.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="RepositoryTests\CartaoRepositoryTests\" />
   </ItemGroup>
 
 </Project>
