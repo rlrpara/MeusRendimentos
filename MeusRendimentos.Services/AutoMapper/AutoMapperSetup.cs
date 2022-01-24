@@ -25,6 +25,7 @@ namespace MeusRendimentos.Services.AutoMapper
             CreateMap<Despesa, DespesaModel>();
             CreateMap<Ganho, GanhoModel>();
             CreateMap<Login, LoginModel>();
+            CreateMap<Mes, MesModel>();
             CreateMap<Tipo, TipoModel>();
             CreateMap<Usuario, UsuarioModel>();
             #endregion

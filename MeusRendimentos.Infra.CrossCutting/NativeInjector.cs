@@ -22,6 +22,7 @@ namespace MeusRendimentos.Infra.CrossCutting
             services.AddTransient<IMesService, MesService>();
             services.AddTransient<ITipoService, TipoService>();
             services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IMesService, MesService>();
 
             #endregion
 
@@ -34,6 +35,7 @@ namespace MeusRendimentos.Infra.CrossCutting
             services.AddTransient<IMesRepository, MesRepository>();
             services.AddTransient<ITipoRepository, TipoRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IMesRepository, MesRepository>();
             services.AddTransient<IBaseRepository, BaseRepository>();
 
             #endregion
