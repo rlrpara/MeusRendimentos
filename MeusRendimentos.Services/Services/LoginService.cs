@@ -13,9 +13,11 @@ namespace MeusRendimentos.Services.Services
         #endregion
 
         #region Construtor
-        public LoginService(ILoginRepository repositorio) : base(repositorio)
+        public LoginService(ILoginRepository repositorio, IMapper mapper)
+            : base(repositorio)
         {
             _repositorio = repositorio;
+            _mapper = mapper;
         }
         #endregion
 
