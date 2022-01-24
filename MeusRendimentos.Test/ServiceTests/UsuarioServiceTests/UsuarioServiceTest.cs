@@ -8,22 +8,22 @@ using Moq;
 using System;
 using Xunit;
 
-namespace MeusRendimentos.Test.ServiceTests.MesServiceTests
+namespace MeusRendimentos.Test.ServiceTests.UsuarioServiceTests
 {
-    [Trait("Services", "MesService")]
-    public class MesServiceTest : MesServiceTestBase
+    [Trait("Services", "UsuarioService")]
+    public class UsuarioServiceTest : UsuarioServiceTestBase
     {
         #region Propriedades Privadas
-        private MesService _service;
+        private UsuarioService _service;
 
         #endregion
 
         #region Construtor
-        public MesServiceTest()
+        public UsuarioServiceTest()
         {
-            var moqMesRepositorio = new Mock<IMesRepository>().Object;
+            var moqUsuarioRepositorio = new Mock<IUsuarioRepository>().Object;
             var moqMapper = new Mock<IMapper>().Object;
-            _service = new MesService(moqMesRepositorio, moqMapper);
+            _service = new UsuarioService(moqUsuarioRepositorio, moqMapper);
         }
 
         #endregion
@@ -40,18 +40,18 @@ namespace MeusRendimentos.Test.ServiceTests.MesServiceTests
         [Fact(DisplayName = "Deve instanciar o objeto.")]
         public void InstanciarObjeto()
         {
-            var MesMock = new Mock<IMesRepository>();
+            var UsuarioMock = new Mock<IUsuarioRepository>();
             var mapperMock = ObterMapperConfig();
 
-            var MesRepository = new MesService(MesMock.Object, mapperMock);
+            var UsuarioRepository = new UsuarioService(UsuarioMock.Object, mapperMock);
 
-            Assert.True(MesRepository != null);
+            Assert.True(UsuarioRepository != null);
         }
 
         [Fact(DisplayName = "Deve invalidar ao enviar Id via método Post")]
         public void DeveInvalidarEnviarIDViaMetodoPost()
         {
-            var exception = Assert.Throws<ArgumentException>(() => _service.Post(new MesModel { Codigo = 1 }));
+            var exception = Assert.Throws<ArgumentException>(() => _service.Post(new UsuarioModel { Codigo = 1 }));
 
             Assert.Equal("O Código deve ser nulo", exception.Message);
         }
@@ -75,25 +75,25 @@ namespace MeusRendimentos.Test.ServiceTests.MesServiceTests
         [Fact(DisplayName = "Deve retornar uma lista maior que 0 via GetAll")]
         public void DeveRetornarListaMaiorQueZeroViaGetAll()
         {
-            var MesRepository = new Mock<IMesRepository>();
+            var UsuarioRepository = new Mock<IUsuarioRepository>();
 
-            MesRepository.Setup(x => x.BuscarTodosPorQueryGerador<Mes>("")).Returns(ObterListaMeses());
+            UsuarioRepository.Setup(x => x.BuscarTodosPorQueryGerador<Usuario>("")).Returns(ObterListaUsuario());
 
-            var resultado = new MesService(MesRepository.Object, ObterMapperConfig()).GetAll();
+            var resultado = new UsuarioService(UsuarioRepository.Object, ObterMapperConfig()).GetAll();
 
             Assert.True(resultado.Count > 0);
         }
 
-        [Fact(DisplayName = "Deve retornar um Mes quando informado seu código válido via GetById")]
-        public void DeveRetornarUmMesQuandoInformadoSeuCodigoValidoViaGetById()
+        [Fact(DisplayName = "Deve retornar um Usuario quando informado seu código válido via GetById")]
+        public void DeveRetornarUmUsuarioQuandoInformadoSeuCodigoValidoViaGetById()
         {
-            var MesRepository = new Mock<IMesRepository>();
+            var UsuarioRepository = new Mock<IUsuarioRepository>();
 
-            MesRepository.Setup(x => x.BuscarPorId<Mes>(1)).Returns(ObterMes1());
+            UsuarioRepository.Setup(x => x.BuscarPorId<Usuario>(1)).Returns(ObterUsuario1());
 
-            var Mes = new MesService(MesRepository.Object, ObterMapperConfig()).GetById("1");
+            var Usuario = new UsuarioService(UsuarioRepository.Object, ObterMapperConfig()).GetById("1");
 
-            Assert.Equal("Fevereiro", Mes.Descricao);
+            Assert.Equal("Joao", Usuario.Nome);
         }
     }
 }
