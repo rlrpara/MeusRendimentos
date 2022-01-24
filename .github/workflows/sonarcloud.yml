@@ -44,7 +44,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: pwsh
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"rlrpara_MeusRendimentos" /o:"rlrpara" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"rlrpara_MeusRendimentos" /o:"rlrpara" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="coverage.xml"
           dotnet test ./MeusRendimentos.Test/MeusRendimentos.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit.*]*%2c[StackExchange.*]*"
-          dotnet MeusRendimentos.sln "-reports:./MeusRendimentos.Test/coverage.cobertura.xml;./MeusRendimentos.Test/coverage.cobertura.xml;" "-targetdir:./testresult" "-reporttypes:SonarQube;"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
