@@ -45,5 +45,5 @@ jobs:
         shell: pwsh
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"rlrpara_MeusRendimentos" /o:"rlrpara" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=".\MeusRendimentos.Test\coverage.cobertura.xml"
-          dotnet test ./MeusRendimentos.Test/MeusRendimentos.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit.*]*%2c[StackExchange.*]*" --collect:"Coverage" --DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test ./MeusRendimentos.Test/MeusRendimentos.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit.*]*%2c[StackExchange.*]*" --collect:"Coverage"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
