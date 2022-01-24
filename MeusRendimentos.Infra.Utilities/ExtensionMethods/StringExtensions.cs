@@ -15,15 +15,7 @@ namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
 
         public static string ApenasNumeros(this string valor)
         {
-            return !string.IsNullOrEmpty(valor) ? new Regex(@"[^0-9a]").Replace(valor, "").ToString() : valor ;
-        }
-
-        public static DateTime AjustaData(this DateTime valor)
-        {
-            if (DateTime.TryParse(valor.ToString(), out _))
-                return Convert.ToDateTime(valor.ToString("yyyy-MM-dd HH:mm:ss"));
-
-            return valor;
+            return !string.IsNullOrEmpty(valor) ? new Regex(@"[^0-9]").Replace(valor, "").ToString() : valor ;
         }
 
         public static string EncodeBase64(this string value)
