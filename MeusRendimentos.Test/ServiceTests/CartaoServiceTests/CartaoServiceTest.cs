@@ -6,6 +6,7 @@ using MeusRendimentos.Services.Models;
 using MeusRendimentos.Services.Services;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
@@ -100,6 +101,18 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
             Assert.True(resultado.Count > 0);
         }
 
+        [Fact(DisplayName = "Deve retornar uma lista igual a 0 via GetAll")]
+        public void DeveRetornarListaIguaZeroViaGetAll()
+        {
+            var CartaoRepository = new Mock<ICartaoRepository>();
+
+            CartaoRepository.Setup(x => x.BuscarTodosPorQueryGerador<Cartao>("")).Returns(new List<Cartao>());
+
+            var resultado = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetAll();
+
+            Assert.True(resultado.Count == 0);
+        }
+
         [Fact(DisplayName = "Deve retornar um Cartao quando informado seu código válido via GetById")]
         public void DeveRetornarUmCartaoQuandoInformadoSeuCodigoValidoViaGetById()
         {
@@ -110,6 +123,16 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
             var Cartao = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetById("1");
 
             Assert.Equal("MASTER", Cartao.Descricao);
+        }
+
+        [Fact(DisplayName = "Deve retornar nulo valido via GetById")]
+        public void DeveRetornarNuloValidoViaGetById()
+        {
+            var CartaoRepository = new Mock<ICartaoRepository>();
+
+            var Cartao = new CartaoService(CartaoRepository.Object, ObterMapperConfig()).GetById("1");
+
+            Assert.Null(Cartao);
         }
 
     }
