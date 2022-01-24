@@ -67,6 +67,16 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
             Assert.Equal("", valorAlterado);
         }
 
+        [Fact(DisplayName = "Deve codificar ao enviar texto")]
+        public void DeveCodificarEnviarTexto()
+        {
+            var valor = "Teste de conversão de texto para base 64.";
+
+            var valorAlterado = valor.EncodeBase64();
+
+            Assert.Equal("VGVzdGUgZGUgY29udmVyc8OjbyBkZSB0ZXh0byBwYXJhIGJhc2UgNjQu", valorAlterado);
+        }
+
         [Fact(DisplayName = "Deve retornar branco ao converter base 64")]
         public void DeveRetornarBrancoConverterBase64()
         {
