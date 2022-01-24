@@ -17,6 +17,16 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
             Assert.Equal("PADRE DO BALAO.", valorAlterado);
         }
 
+        [Fact(DisplayName = "Deve retonar em branco ao validar RemoveAcentos.")]
+        public void DeveRetornarBrancoValdarRemoveAcentos()
+        {
+            var valor = "";
+
+            var valorAlterado = valor.RemoveAcentos();
+
+            Assert.Equal("", valorAlterado);
+        }
+
         [Fact(DisplayName = "Deve retonar apenas numeros")]
         public void DeveRetornarApenasNumeros()
         {
@@ -25,6 +35,16 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
             var valorAlterado = valor.ApenasNumeros();
 
             Assert.Equal("301203", valorAlterado);
+        }
+
+        [Fact(DisplayName = "Deve retonar em branco ao validar Apenas Numeros")]
+        public void DeveRetornarBrancoValidarApenasNumeros()
+        {
+            var valor = "";
+
+            var valorAlterado = valor.ApenasNumeros();
+
+            Assert.Equal("", valorAlterado);
         }
 
         [Fact(DisplayName = "Deve desconverter base 64")]
