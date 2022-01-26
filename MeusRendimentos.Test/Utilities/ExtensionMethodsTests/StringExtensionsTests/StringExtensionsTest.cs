@@ -86,5 +86,45 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
 
             Assert.Equal("", valorAlterado);
         }
+
+        [Fact(DisplayName = "Deve retornar apenas texto")]
+        public void DeveRetornarApenasTexto()
+        {
+            var valor = "Masterclass C#, .NET 5, Nuget, GitHub e GitHub Actions | por André Baltieri";
+
+            var valorAlterado = valor.ApenasTexto();
+
+            Assert.Equal("MASTERCLASS C NET 5 NUGET GITHUB E GITHUB ACTIONS  POR ANDRE BALTIERI", valorAlterado);
+        }
+
+        [Fact(DisplayName = "Deve retornar apenas texto em branco")]
+        public void DeveRetornarApenasTextoEmBranco()
+        {
+            var valor = "";
+
+            var valorAlterado = valor.ApenasTexto();
+
+            Assert.Equal("", valorAlterado);
+        }
+
+        [Fact(DisplayName = "Deve converter text e remover acentos para url")]
+        public void DeveConverterTextoRemoverAcentosParaUrl()
+        {
+            var valor = "Masterclass C#, .NET 5, Nuget, GitHub e GitHub Actions | por André Baltieri";
+
+            var valorAlterado = valor.ToUrl();
+
+            Assert.Equal("masterclass-c-net-5-nuget-github-e-github-actions-por-andre-baltieri", valorAlterado);
+        }
+
+        [Fact(DisplayName = "Deve converter text e remover acentos para url em branco")]
+        public void DeveConverterTextoRemoverAcentosParaUrlEmBranco()
+        {
+            var valor = "";
+
+            var valorAlterado = valor.ToUrl();
+
+            Assert.Equal("", valorAlterado);
+        }
     }
 }

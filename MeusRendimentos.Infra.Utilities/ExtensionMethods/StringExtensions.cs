@@ -18,6 +18,11 @@ namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
             return !string.IsNullOrEmpty(valor) ? new Regex(@"[^0-9]").Replace(valor, "").ToString() : valor ;
         }
 
+        public static string ApenasTexto(this string valor)
+        {
+            return string.Join("", Regex.Split(valor.RemoveAcentos(), @"[^\w ]"));
+        }
+
         public static string EncodeBase64(this string value)
         {
             return !string.IsNullOrEmpty(value) ? Convert.ToBase64String(Encoding.UTF8.GetBytes(value)) : value;
@@ -26,6 +31,12 @@ namespace MeusRendimentos.Infra.Utilities.ExtensionMethods
         public static string DecodeBase64(this string value)
         {
             return !string.IsNullOrEmpty(value) ? Encoding.UTF8.GetString(Convert.FromBase64String(value)) : value;
+        }
+
+        public static string ToUrl(this string value)
+        {
+            return Regex.Replace(value.ApenasTexto(), @"\s+", "-")
+                .ToLower();
         }
     }
 }
