@@ -1,5 +1,4 @@
 ﻿using MeusRendimentos.Infra.Utilities.ExtensionMethods;
-using System;
 using Xunit;
 
 namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsTests
@@ -20,11 +19,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve retonar em branco ao validar RemoveAcentos.")]
         public void DeveRetornarBrancoValdarRemoveAcentos()
         {
-            var valor = "";
-
-            var valorAlterado = valor.RemoveAcentos();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".RemoveAcentos());
         }
 
         [Fact(DisplayName = "Deve retonar apenas numeros")]
@@ -40,11 +35,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve retonar em branco ao validar Apenas Numeros")]
         public void DeveRetornarBrancoValidarApenasNumeros()
         {
-            var valor = "";
-
-            var valorAlterado = valor.ApenasNumeros();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".ApenasNumeros());
         }
 
         [Fact(DisplayName = "Deve desconverter base 64")]
@@ -60,11 +51,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve retornar em branco ao desconverter base 64")]
         public void DeveRetornarBrancoDesconverterBase64()
         {
-            var valor = "";
-
-            var valorAlterado = valor.DecodeBase64();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".DecodeBase64());
         }
 
         [Fact(DisplayName = "Deve codificar ao enviar texto")]
@@ -80,11 +67,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve retornar branco ao converter base 64")]
         public void DeveRetornarBrancoConverterBase64()
         {
-            var valor = "";
-
-            var valorAlterado = valor.EncodeBase64();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".EncodeBase64());
         }
 
         [Fact(DisplayName = "Deve retornar apenas texto")]
@@ -100,11 +83,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve retornar apenas texto em branco")]
         public void DeveRetornarApenasTextoEmBranco()
         {
-            var valor = "";
-
-            var valorAlterado = valor.ApenasTexto();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".ApenasTexto());
         }
 
         [Fact(DisplayName = "Deve converter text e remover acentos para url")]
@@ -120,11 +99,7 @@ namespace MeusRendimentos.Test.Utilities.ExtensionMethodsTests.StringExtensionsT
         [Fact(DisplayName = "Deve converter text e remover acentos para url em branco")]
         public void DeveConverterTextoRemoverAcentosParaUrlEmBranco()
         {
-            var valor = "";
-
-            var valorAlterado = valor.ToUrl();
-
-            Assert.Equal("", valorAlterado);
+            Assert.Equal("", "".ToUrl());
         }
     }
 }
