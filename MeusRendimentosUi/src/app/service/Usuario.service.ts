@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CartaoModel } from '../model/CartaoModel';
+import { UsuarioModel } from '../model/UsuarioModel';
 
 const httpOptions = {
   headers : new HttpHeaders({
@@ -12,28 +12,28 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class CartaoService {
+export class UsuarioService {
 
-  url = 'api/cartao';
+  url = 'api/Usuario';
 
 constructor(private http: HttpClient) { }
 
-  ObterTodos(): Observable<CartaoModel[]> {
-    return this.http.get<CartaoModel[]>(this.url);
+  ObterTodos(): Observable<UsuarioModel[]> {
+    return this.http.get<UsuarioModel[]>(this.url);
   }
 
-  ObterPorId(id: number): Observable<CartaoModel> {
+  ObterPorId(id: number): Observable<UsuarioModel> {
     const apiUrl = `${this.url}/${id}`;
-    return this.http.get<CartaoModel>(apiUrl);
+    return this.http.get<UsuarioModel>(apiUrl);
   }
 
-  Inserir(cartao: CartaoModel): Observable<any> {
-    return this.http.post(this.url, cartao, httpOptions);
+  Inserir(Usuario: UsuarioModel): Observable<any> {
+    return this.http.post(this.url, Usuario, httpOptions);
   }
 
-  Atualizar(id:number, cartao: CartaoModel): Observable<any> {
+  Atualizar(id:number, Usuario: UsuarioModel): Observable<any> {
     const apiUrl = `${this.url}/${id}`;
-    return this.http.post(apiUrl, cartao, httpOptions);
+    return this.http.post(apiUrl, Usuario, httpOptions);
   }
 
   Excluir(id: number): Observable<any> {
