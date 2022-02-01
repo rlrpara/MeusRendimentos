@@ -25,6 +25,6 @@ export class ListarCategoriaComponent implements OnInit {
   }
 
   ExibirColunas(): string[] {
-    return ['nome', 'icone', 'tipo', 'acoes'];
+    return ['codigo', 'descricao', 'icone', 'tipoId', 'acoes'];
   }
 }
