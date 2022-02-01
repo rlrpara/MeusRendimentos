@@ -3,23 +3,25 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListarCategoriaComponent } from './components/categoria/ListarCategoria/ListarCategoria.component';
 
 import { HttpClientModule }  from '@angular/common/http';
-import { TipoService } from './Services/Tipo.service';
-import { CartaoService } from './Services/Cartao.service';
+import { CartaoService } from './service/Cartao.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListarCategoriaComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
-    CartaoService,
-    TipoService,
-    HttpClientModule
+    HttpClientModule,
+    CartaoService
   ],
   bootstrap: [AppComponent]
 })
