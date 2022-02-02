@@ -28,6 +28,6 @@ namespace MeusRendimentos.Domain.Entities
 
         [Column("FUNCAO_ID", Order = 6)]
         [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true, ChaveEstrangeira = "FUNCAO")]
-        public int FuncaoId { get; set; }
+        public int FuncaoId { get; set; } = 2;
     }
 }
