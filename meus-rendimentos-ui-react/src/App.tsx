@@ -6,7 +6,7 @@ import GlobalStyles from './styles/global'
 
 const App: React.FC = () => (
   <>
-    <LoginCadastro />
+    <Login />
     <GlobalStyles />
   </>
 );

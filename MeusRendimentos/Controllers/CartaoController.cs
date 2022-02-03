@@ -7,7 +7,7 @@ using System.Linq;
 namespace MeusRendimentos.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class CartaoController : ControllerBase
     {
         #region [Propriedades Privadas]

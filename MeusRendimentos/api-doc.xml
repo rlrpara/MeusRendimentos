@@ -15,6 +15,13 @@
             <response code="404">Retorna como dados não encontrados</response>
             <returns></returns>
         </member>
+        <member name="M:MeusRendimentos.Controllers.LoginController.Authenticate(MeusRendimentos.Services.Models.UsuarioAuthenticateRequestModel)">
+            <summary>
+            
+            </summary>
+            <param name="usuarioModel"></param>
+            <returns></returns>
+        </member>
         <member name="T:MeusRendimentos.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

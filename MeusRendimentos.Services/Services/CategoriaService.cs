@@ -49,8 +49,6 @@ namespace MeusRendimentos.Services.Services
             if (CategoriaModel.Codigo != 0 && CategoriaModel.Codigo != null)
                 throw new ArgumentException("O Código deve ser nulo");
 
-            //verificar se existe o codigo da empresa informada
-
             Validator.ValidateObject(CategoriaModel, new ValidationContext(CategoriaModel), true);
 
             return (_repositorio.Adicionar(_mapper.Map<Categoria>(CategoriaModel)) > 0);

@@ -7,7 +7,7 @@ using System.Linq;
 namespace MeusRendimentos.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class CategoriaController : ControllerBase
     {
         #region [Propriedades Privadas]
@@ -23,7 +23,7 @@ namespace MeusRendimentos.Controllers
         [HttpGet, AllowAnonymous]
         public IActionResult Get() => Ok(_service.GetAll());
 
-        [HttpGet("{id}"), AllowAnonymous]
+        [HttpGet("{id}")]
         public IActionResult GetId(string id) => Ok(_service.GetById(id));
 
         [HttpPost]
@@ -31,11 +31,8 @@ namespace MeusRendimentos.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_service.GetById(entidade.Codigo.ToString()) == null)
-                    return NotFound("Usuário não encontrado.");
-
                 if (_service.Post(entidade))
-                    return Created($"api/{RouteData.Values.First().Value}", _service.GetById(entidade.Codigo.ToString()));
+                    return Created($"api/{RouteData.Values.First().Value}", entidade);
                 else
                     return BadRequest("Erro ao salvar");
             }

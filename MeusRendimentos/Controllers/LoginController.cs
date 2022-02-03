@@ -1,4 +1,6 @@
 ﻿using MeusRendimentos.Services.Interfaces;
+using MeusRendimentos.Services.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -58,6 +60,22 @@ namespace MeusRendimentos.Controllers
                 return Ok(JsonSaida(usuarioLogado));
             else
                 return NotFound(new { Resultado = $"Usuário não encontrado." });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuarioModel"></param>
+        /// <returns></returns>
+        [HttpPost("authenticate"), AllowAnonymous]
+        public IActionResult Authenticate(UsuarioAuthenticateRequestModel usuarioModel)
+        {
+            var resultado = _service.Authenticate(usuarioModel);
+
+            if (resultado != null)
+                return Ok(resultado);
+
+            return NotFound(new { Resultado = $"Usuário não encontrado." });
         }
         #endregion
     }

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeusRendimentos.Domain\MeusRendimentos.Domain.csproj" />
+    <ProjectReference Include="..\MeusRendimentos.Infra.Auth\MeusRendimentos.Infra.Auth.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Data\MeusRendimentos.Infra.Data.csproj" />
     <ProjectReference Include="..\MeusRendimentos.Infra.Utilities\MeusRendimentos.Infra.Utilities.csproj" />
   </ItemGroup>

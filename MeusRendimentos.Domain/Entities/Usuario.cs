@@ -24,7 +24,7 @@ namespace MeusRendimentos.Domain.Entities
 
         [Column("FOTO", Order = 5)]
         [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true)]
-        public byte[] Foto { get; set; }
+        public string Foto { get; set; }
 
         [Column("FUNCAO_ID", Order = 6)]
         [OpcoesBaseAttribute(UsarNoBancoDeDados = true, UsarParaBuscar = true, UsarNaGrid = true, ChaveEstrangeira = "FUNCAO")]
