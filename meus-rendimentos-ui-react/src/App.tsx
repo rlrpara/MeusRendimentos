@@ -1,12 +1,16 @@
 import React from 'react';
 import Login from './pages/Login';
-import LoginCadastro from './pages/LoginCadastro';
+
+import { AuthProvider } from './Context/AuthContext';
 
 import GlobalStyles from './styles/global'
 
 const App: React.FC = () => (
   <>
-    <Login />
+    <AuthProvider>
+      <Login />
+    </AuthProvider>
+
     <GlobalStyles />
   </>
 );

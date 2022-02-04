@@ -44,7 +44,7 @@ namespace MeusRendimentos.Test.ServiceTests.CartaoServiceTests
             var cartaoMock = new Mock<ICartaoRepository>();
             var mapperMock = ObterMapperConfig();
 
-            var CartaoRepository = new CartaoService(cartaoMock.Object, mapperMock);
+            var CartaoRepository = new CartaoService(new Mock<ICartaoRepository>().Object, new Mock<IMapper>().Object);
 
             Assert.True(CartaoRepository != null);
         }

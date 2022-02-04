@@ -46,11 +46,6 @@ namespace MeusRendimentos.Services.Services
 
         public bool Post(UsuarioModel UsuarioModel)
         {
-            if (UsuarioModel.Codigo != 0 && UsuarioModel.Codigo != null)
-                throw new ArgumentException("O Código deve ser nulo");
-
-            //verificar se existe o codigo da empresa informada
-
             Validator.ValidateObject(UsuarioModel, new ValidationContext(UsuarioModel), true);
 
             return (_repositorio.Adicionar(_mapper.Map<Usuario>(UsuarioModel)) > 0);

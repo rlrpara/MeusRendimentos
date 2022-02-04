@@ -48,14 +48,6 @@ namespace MeusRendimentos.Test.ServiceTests.UsuarioServiceTests
             Assert.True(UsuarioRepository != null);
         }
 
-        [Fact(DisplayName = "Deve invalidar ao enviar Id via método Post")]
-        public void DeveInvalidarEnviarIDViaMetodoPost()
-        {
-            var exception = Assert.Throws<ArgumentException>(() => _service.Post(new UsuarioModel { Codigo = 1 }));
-
-            Assert.Equal("O Código deve ser nulo", exception.Message);
-        }
-
         [Fact(DisplayName = "Deve invalidar ao enviar id vazia ou nulla via GetById")]
         public void DeveInvalidarEnviarIDVaziaNUlaViaGetById()
         {
