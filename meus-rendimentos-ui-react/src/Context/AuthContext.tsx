@@ -3,6 +3,12 @@ import api from '../Services/api';
 
 import Api from '../Services/api';
 
+interface AuthState {
+  token: string;
+  usuario: object;
+  
+}
+
 interface LoginCredentials {
   email: string;
   senha: string;
@@ -11,11 +17,7 @@ interface LoginCredentials {
 interface AuthContextData {
   usuario: object;
   logIn(credentials: LoginCredentials): Promise<void>;
-}
-
-interface AuthState {
-  token: string;
-  usuario: object;
+  logOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -30,7 +32,7 @@ const AuthProvider: React.FC = ({ children }) => {
     }
 
     return {} as AuthState;
-  })
+  });
 
   const logIn = useCallback( async({ email, senha }) => {
     const response = await Api.post('api/login/authenticate', {
@@ -46,8 +48,15 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({ token, usuario });
   }, []);
 
+  const logOut = useCallback(() => {
+      localStorage.removeItem('@MeusRendimentos:token');
+      localStorage.removeItem('@MeusRendimentos:usuario');
+
+      setData({} as AuthState)
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ usuario: data.usuario, logIn }}>
+    <AuthContext.Provider value={{ usuario: data.usuario, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -92,7 +92,6 @@ namespace MeusRendimentos
 
             app.UseSpa(x =>
             {
-                //x.Options.SourcePath = Path.Combine(Directory.GetCurrentDirectory(), "MeusRendimentosUi");
                 x.Options.SourcePath = "MeusRendimentosUi";
 
                 if (env.IsDevelopment())

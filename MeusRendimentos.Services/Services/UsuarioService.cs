@@ -38,7 +38,7 @@ namespace MeusRendimentos.Services.Services
 
         public UsuarioModel GetById(string id)
         {
-            if (!id.IsNumeric() || string.IsNullOrWhiteSpace(id))
+            if (!id.IsNumeric())
                 throw new ArgumentException("Código inválido");
 
             return _repositorio.BuscarPorId<Usuario>(int.Parse(id)) == null ? null : _mapper.Map<UsuarioModel>(_repositorio.BuscarPorId<Usuario>(int.Parse(id)));
