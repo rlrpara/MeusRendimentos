@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MeusRendimentos.Domain.Enumerables;
 using MeusRendimentos.Domain.Interfaces;
 using MeusRendimentos.Infra.Data.Context;
 using System;
@@ -11,19 +12,20 @@ namespace MeusRendimentos.Infra.Data.Repositories
 {
     public class BaseRepository : IDisposable, IBaseRepository
     {
-        #region Propriedades Privadas
+        #region [Propriedades Privadas]
         protected readonly IDbConnection _conexao;
-        private readonly static string _nomeBanco = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
+        private readonly string _nomeBanco;
         #endregion
 
-        #region Construtores
+        #region [Construtores]
         public BaseRepository()
         {
-            _conexao = ConnectionConfiguration.ObterConexao();
+            _nomeBanco = Environment.GetEnvironmentVariable("DATABASE");
+            _conexao = ConnectionConfiguration.ObterConexao(ObterTipoBanco());
         }
         #endregion
 
-        #region Métodos Privados
+        #region [Métodos Privados]
         private static string ObterNomeTabela<T>()
         {
             return TableNameMapper(typeof(T));
@@ -33,9 +35,13 @@ namespace MeusRendimentos.Infra.Data.Repositories
             dynamic tableattr = type.GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
             return (tableattr != null ? tableattr.Name : string.Empty);
         }
+        private TipoBanco ObterTipoBanco()
+        {
+            return (TipoBanco)Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"));
+        }
         #endregion
 
-        #region Métodos Públicos
+        #region [Métodos Públicos]
         public int Adicionar<TEntity>(TEntity entidade) where TEntity : class
         {
             return _conexao.Execute(GeradorDapper.RetornaInsert(entidade));

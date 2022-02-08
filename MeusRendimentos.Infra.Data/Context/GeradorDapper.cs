@@ -1,4 +1,5 @@
 ﻿using MeusRendimentos.Domain.Entities.Base;
+using MeusRendimentos.Domain.Enumerables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,8 +12,12 @@ namespace MeusRendimentos.Infra.Data.Context
 {
     public static class GeradorDapper
     {
+        #region [Propriedades Privadas]
+        private readonly static string _nomeBanco = Environment.GetEnvironmentVariable("DATABASE");
+        private readonly static TipoBanco _tipoBanco = (TipoBanco)Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"));
+        #endregion
+
         #region Métodos Privados
-        private readonly static string _nomeBanco = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
         public static string ObterColunasGrid<T>(IEnumerable<T> list) where T : class
         {
             string chavePrimaria = string.Empty;
@@ -33,7 +38,6 @@ namespace MeusRendimentos.Infra.Data.Context
 
             return sqlPesquisa.ToString();
         }
-
         public static string ObterDadosGrid<T>(string sqlWhere) where T : class
         {
             string chavePrimaria = string.Empty;
@@ -64,7 +68,6 @@ namespace MeusRendimentos.Infra.Data.Context
 
             return sqlPesquisa.ToString();
         }
-
         private static string TipoPropriedade(PropertyInfo item)
         {
             return item.PropertyType.Name switch
@@ -74,12 +77,23 @@ namespace MeusRendimentos.Infra.Data.Context
                 "Double" => "decimal(18,2)",
                 "Single" => "float",
                 "DateTime" => "datetime DEFAULT CURRENT_TIMESTAMP",
-                "Boolean" => "tinyint(1) NOT NULL DEFAULT 1",
+                "Boolean" => _tipoBanco == TipoBanco.MySql ? "tinyint(1) NOT NULL DEFAULT 1" : "int NOT NULL DEFAULT 1",
                 "Nullable`1" => ObterParaTipoNulo(item.PropertyType.FullName),
                 _ => "varchar(255) NULL",
             };
         }
+        private static string ObterParaTipoNulo(string fullName)
+        {
+            if (fullName.Contains("Int32"))
+                return "int(11) DEFAULT NULL";
+            else if (fullName.Contains("DateTime"))
+                return "datetime DEFAULT NULL";
+            else
+                return "varchar(255) NULL";
+        }
+        #endregion
 
+        #region Métodos Públicos
         public static string InserirDadosPadroes<T>() where T : class
         {
             var nomeTabela = ObterNomeTabela<T>();
@@ -132,19 +146,6 @@ namespace MeusRendimentos.Infra.Data.Context
 
             return sqlInsert.ToString();
         }
-
-        private static string ObterParaTipoNulo(string fullName)
-        {
-            if (fullName.Contains("Int32"))
-                return "int(11) DEFAULT NULL";
-            else if (fullName.Contains("DateTime"))
-                return "datetime DEFAULT NULL";
-            else
-                return "varchar(255) NULL";
-        }
-        #endregion
-
-        #region Métodos Públicos
         public static string ObterNomeTabela<T>() where T : class
         {
             dynamic tableattr = typeof(T).GetCustomAttributes(false).SingleOrDefault(attr => attr.GetType().Name == "TableAttribute");
@@ -231,7 +232,6 @@ namespace MeusRendimentos.Infra.Data.Context
 
             return sqlInsert.ToString();
         }
-
         public static string GerarProcedureIfColumnNotExists(string nomeBanco)
         {
             var sqlPesquisa = new StringBuilder();
@@ -268,7 +268,6 @@ namespace MeusRendimentos.Infra.Data.Context
 
             return sqlPesquisa.ToString();
         }
-
         public static string RetornaUpdate<T>(int id, T entidade) where T : class
         {
             List<string> condicao = new List<string>();
@@ -382,18 +381,42 @@ namespace MeusRendimentos.Infra.Data.Context
 
             var sqlPesquisa = new StringBuilder();
 
-            sqlPesquisa.AppendLine($"USE {nomeBanco};");
-            sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {nomeBanco}.{ObterNomeTabela<T>()} (");
-            sqlPesquisa.AppendLine($"  {chavePrimaria} int(11) NOT NULL AUTO_INCREMENT,");
-            sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
-            sqlPesquisa.AppendLine($"  PRIMARY KEY ({chavePrimaria})");
-            sqlPesquisa.AppendLine($")");
-            sqlPesquisa.AppendLine($"ENGINE = INNODB,");
-            sqlPesquisa.AppendLine($"CHARACTER SET utf8,");
-            sqlPesquisa.AppendLine($"COLLATE utf8_general_ci;{Environment.NewLine}");
-
-            if (!string.IsNullOrEmpty(sqlConstraint.ToString()))
-                sqlPesquisa.AppendLine(sqlConstraint.ToString());
+            switch (_tipoBanco)
+            {
+                case TipoBanco.MySql:
+                    sqlPesquisa.AppendLine($"USE {nomeBanco};");
+                    sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {nomeBanco}.{ObterNomeTabela<T>()} (");
+                    sqlPesquisa.AppendLine($"  {chavePrimaria} int(11) NOT NULL AUTO_INCREMENT,");
+                    sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
+                    sqlPesquisa.AppendLine($"  PRIMARY KEY ({chavePrimaria})");
+                    sqlPesquisa.AppendLine($")");
+                    sqlPesquisa.AppendLine($"ENGINE = INNODB,");
+                    sqlPesquisa.AppendLine($"CHARACTER SET utf8,");
+                    sqlPesquisa.AppendLine($"COLLATE utf8_general_ci;{Environment.NewLine}");
+                    if (!string.IsNullOrEmpty(sqlConstraint.ToString()))
+                        sqlPesquisa.AppendLine(sqlConstraint.ToString());
+                    break;
+                case TipoBanco.SqlServer:
+                    sqlPesquisa.AppendLine($"USE {nomeBanco};");
+                    sqlPesquisa.AppendLine($"IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{ObterNomeTabela<T>()}')");
+                    sqlPesquisa.AppendLine($"BEGIN");
+                    sqlPesquisa.AppendLine($"   CREATE TABLE {ObterNomeTabela<T>()}(");
+                    sqlPesquisa.AppendLine($"        {chavePrimaria} int IDENTITY(1,1) NOT NULL,");
+                    sqlPesquisa.AppendLine($"        {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
+                    sqlPesquisa.AppendLine($"  CONSTRAINT [PK_{ObterNomeTabela<T>()}] PRIMARY KEY CLUSTERED ");
+                    sqlPesquisa.AppendLine($"(");
+                    sqlPesquisa.AppendLine($"   {chavePrimaria} ASC");
+                    sqlPesquisa.AppendLine($")WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]");
+                    sqlPesquisa.AppendLine($") ON [PRIMARY]");
+                    sqlPesquisa.AppendLine($"END");
+                    break;
+                case TipoBanco.Firebird:
+                    break;
+                case TipoBanco.Postgresql:
+                    break;
+                default:
+                    break;
+            }
 
             return sqlPesquisa.ToString();
         }
