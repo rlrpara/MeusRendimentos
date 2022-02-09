@@ -72,7 +72,7 @@ namespace MeusRendimentos.Infra.Data.Context
         {
             return item.PropertyType.Name switch
             {
-                "Int32" => "int(11) DEFAULT NULL",
+                "Int32" => _tipoBanco == TipoBanco.MySql ? "int(11) DEFAULT NULL": "int NOT NULL DEFAULT 1",
                 "Int64" => "bigint DEFAULT NULL",
                 "Double" => "decimal(18,2)",
                 "Single" => "float",

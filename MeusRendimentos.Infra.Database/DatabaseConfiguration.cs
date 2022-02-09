@@ -2,7 +2,6 @@
 using MeusRendimentos.Domain.Entities;
 using MeusRendimentos.Domain.Enumerables;
 using MeusRendimentos.Infra.Data.Context;
-using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.IO;
@@ -13,8 +12,11 @@ namespace MeusRendimentos.Infra.Database
 {
     public static class DatabaseConfiguration
     {
-        #region Métodos Privados
+        #region [Propriedades Privadas]
         private static TipoBanco _tipoBanco;
+        #endregion
+
+        #region [Métodos Privados]
         private static string ObterNomeBanco()
             => Environment.GetEnvironmentVariable("DATABASE");
         private static string ObterProcedureDropConstraint(string nomeBanco)
@@ -117,7 +119,7 @@ namespace MeusRendimentos.Infra.Database
         {
             try
             {
-                _tipoBanco = (TipoBanco)Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO")); ;
+                _tipoBanco = (TipoBanco)Convert.ToInt32(Environment.GetEnvironmentVariable("TIPO_BANCO"));
                 using var conexao = ConnectionConfiguration.ObterConexao(_tipoBanco);
                 ExisteBanco(conexao, ObterNomeBanco());
                 return true;
@@ -129,7 +131,7 @@ namespace MeusRendimentos.Infra.Database
         }
         #endregion
 
-        #region Métodos Públicos
+        #region [Métodos Públicos]
         public static void GerenciarBanco()
         {
             try
