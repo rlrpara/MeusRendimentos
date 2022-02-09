@@ -5,6 +5,7 @@ using MeusRendimentos.Infra.Data.Context;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -96,6 +97,12 @@ namespace MeusRendimentos.Infra.Database
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    break;
+                case TipoBanco.Sqlite:
+                    var caminho = Path.Combine(Directory.GetCurrentDirectory(), nomeBanco);
+                    if (!File.Exists(caminho))
+                        File.Create(caminho).Close();
+                    sqlPesquisa.AppendLine($"SELECT 1 AS VALOR;");
                     break;
                 default:
                     break;

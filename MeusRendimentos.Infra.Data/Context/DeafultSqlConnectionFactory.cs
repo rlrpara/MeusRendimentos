@@ -1,9 +1,11 @@
 ﻿using MeusRendimentos.Domain.Enumerables;
 using MeusRendimentos.Domain.Interfaces;
+using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace MeusRendimentos.Infra.Data.Context
 {
@@ -25,11 +27,11 @@ namespace MeusRendimentos.Infra.Data.Context
             NomeBanco = Environment.GetEnvironmentVariable("DATABASE"),
             Porta = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT")),
         };
-        private SqlConnection ObtemStringConexaoSqlServer()
+        private SqlConnection ObtemConexaoSqlServer()
         {
             return new SqlConnection($"Server={(_conexao.TipoAcesso == 1 ? _conexao.ServidorOnline : _conexao.ServidorLocal)};User Id={_conexao.Usuario};Password={_conexao.Senha};Integrated Security=false;");
         }
-        private MySqlConnection ObtemStringConexaoMySql()
+        private MySqlConnection ObtemConexaoMySql()
         {
             return new MySqlConnection($"Server={(_conexao.TipoAcesso == 1 ? _conexao.ServidorOnline : _conexao.ServidorLocal)}; User Id={_conexao.Usuario}; Password={_conexao.Senha}; Allow User Variables=True");
         }
@@ -48,12 +50,21 @@ namespace MeusRendimentos.Infra.Data.Context
         {
             return _tipoBanco switch
             {
-                TipoBanco.MySql => ObtemStringConexaoMySql(),
-                TipoBanco.SqlServer => ObtemStringConexaoSqlServer(),
+                TipoBanco.MySql => ObtemConexaoMySql(),
+                TipoBanco.SqlServer => ObtemConexaoSqlServer(),
                 TipoBanco.Firebird => null,
                 TipoBanco.Postgresql => null,
+                TipoBanco.Sqlite => ObtemConexaoSqlite(),
                 _ => null,
             };
+        }
+
+        private SqliteConnection ObtemConexaoSqlite()
+        {
+            var caminho = Path.Combine($"{Directory.GetCurrentDirectory()}", ObterParametrosConexao().NomeBanco + ".sqlite");
+            if(!File.Exists(caminho))
+                File.Create(caminho).Close();
+            return new SqliteConnection($"Data Source={caminho}"); ;
         }
         #endregion
     }

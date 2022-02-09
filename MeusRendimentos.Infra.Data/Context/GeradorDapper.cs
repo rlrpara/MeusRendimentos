@@ -236,35 +236,55 @@ namespace MeusRendimentos.Infra.Data.Context
         {
             var sqlPesquisa = new StringBuilder();
 
-            sqlPesquisa.AppendLine($"USE {nomeBanco};");
-            sqlPesquisa.AppendLine($"DROP PROCEDURE IF EXISTS AddIfColumnNotExists; ");
-            sqlPesquisa.AppendLine($"DROP FUNCTION IF EXISTS IfColumnExists; ");
-            sqlPesquisa.AppendLine($"CREATE FUNCTION IfColumnExists (table_name_IN VARCHAR(100), field_name_IN VARCHAR(100)) ");
-            sqlPesquisa.AppendLine($"RETURNS INT");
-            sqlPesquisa.AppendLine($"RETURN (");
-            sqlPesquisa.AppendLine($"    SELECT COUNT(COLUMN_NAME) ");
-            sqlPesquisa.AppendLine($"    FROM INFORMATION_SCHEMA.columns ");
-            sqlPesquisa.AppendLine($"    WHERE TABLE_SCHEMA = DATABASE() ");
-            sqlPesquisa.AppendLine($"    AND TABLE_NAME = table_name_IN ");
-            sqlPesquisa.AppendLine($"    AND COLUMN_NAME = field_name_IN");
-            sqlPesquisa.AppendLine($");");
-            sqlPesquisa.AppendLine($"CREATE PROCEDURE AddIfColumnNotExists (");
-            sqlPesquisa.AppendLine($"    IN table_name_IN VARCHAR(100)");
-            sqlPesquisa.AppendLine($"    , IN field_name_IN VARCHAR(100)");
-            sqlPesquisa.AppendLine($"    , IN field_definition_IN VARCHAR(100)");
-            sqlPesquisa.AppendLine($")");
-            sqlPesquisa.AppendLine($"BEGIN");
-            sqlPesquisa.AppendLine($"    SET @isFieldThere = IfColumnExists(table_name_IN, field_name_IN);");
-            sqlPesquisa.AppendLine($"    IF (@isFieldThere = 0) THEN");
-            sqlPesquisa.AppendLine($"        SET @ddl = CONCAT('ALTER TABLE ', table_name_IN);");
-            sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', 'ADD COLUMN') ;");
-            sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', field_name_IN);");
-            sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', field_definition_IN);");
-            sqlPesquisa.AppendLine($"        PREPARE stmt FROM @ddl;");
-            sqlPesquisa.AppendLine($"        EXECUTE stmt;");
-            sqlPesquisa.AppendLine($"        DEALLOCATE PREPARE stmt;");
-            sqlPesquisa.AppendLine($"    END IF;");
-            sqlPesquisa.AppendLine($"END;");
+            switch (_tipoBanco)
+            {
+                case TipoBanco.MySql:
+                    sqlPesquisa.AppendLine($"USE {nomeBanco};");
+                    sqlPesquisa.AppendLine($"DROP PROCEDURE IF EXISTS AddIfColumnNotExists; ");
+                    sqlPesquisa.AppendLine($"DROP FUNCTION IF EXISTS IfColumnExists; ");
+                    sqlPesquisa.AppendLine($"CREATE FUNCTION IfColumnExists (table_name_IN VARCHAR(100), field_name_IN VARCHAR(100)) ");
+                    sqlPesquisa.AppendLine($"RETURNS INT");
+                    sqlPesquisa.AppendLine($"RETURN (");
+                    sqlPesquisa.AppendLine($"    SELECT COUNT(COLUMN_NAME) ");
+                    sqlPesquisa.AppendLine($"    FROM INFORMATION_SCHEMA.columns ");
+                    sqlPesquisa.AppendLine($"    WHERE TABLE_SCHEMA = DATABASE() ");
+                    sqlPesquisa.AppendLine($"    AND TABLE_NAME = table_name_IN ");
+                    sqlPesquisa.AppendLine($"    AND COLUMN_NAME = field_name_IN");
+                    sqlPesquisa.AppendLine($");");
+                    sqlPesquisa.AppendLine($"CREATE PROCEDURE AddIfColumnNotExists (");
+                    sqlPesquisa.AppendLine($"    IN table_name_IN VARCHAR(100)");
+                    sqlPesquisa.AppendLine($"    , IN field_name_IN VARCHAR(100)");
+                    sqlPesquisa.AppendLine($"    , IN field_definition_IN VARCHAR(100)");
+                    sqlPesquisa.AppendLine($")");
+                    sqlPesquisa.AppendLine($"BEGIN");
+                    sqlPesquisa.AppendLine($"    SET @isFieldThere = IfColumnExists(table_name_IN, field_name_IN);");
+                    sqlPesquisa.AppendLine($"    IF (@isFieldThere = 0) THEN");
+                    sqlPesquisa.AppendLine($"        SET @ddl = CONCAT('ALTER TABLE ', table_name_IN);");
+                    sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', 'ADD COLUMN') ;");
+                    sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', field_name_IN);");
+                    sqlPesquisa.AppendLine($"        SET @ddl = CONCAT(@ddl, ' ', field_definition_IN);");
+                    sqlPesquisa.AppendLine($"        PREPARE stmt FROM @ddl;");
+                    sqlPesquisa.AppendLine($"        EXECUTE stmt;");
+                    sqlPesquisa.AppendLine($"        DEALLOCATE PREPARE stmt;");
+                    sqlPesquisa.AppendLine($"    END IF;");
+                    sqlPesquisa.AppendLine($"END;");
+                    break;
+                case TipoBanco.SqlServer:
+                    sqlPesquisa.AppendLine($"");
+                    break;
+                case TipoBanco.Firebird:
+                    sqlPesquisa.AppendLine($"");
+                    break;
+                case TipoBanco.Postgresql:
+                    sqlPesquisa.AppendLine($"");
+                    break;
+                case TipoBanco.Sqlite:
+                    sqlPesquisa.AppendLine($"");
+                    break;
+                default:
+                    break;
+            }
+            
 
             return sqlPesquisa.ToString();
         }
@@ -413,6 +433,13 @@ namespace MeusRendimentos.Infra.Data.Context
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    break;
+                case TipoBanco.Sqlite:
+                    sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {ObterNomeTabela<T>()} (");
+                    sqlPesquisa.AppendLine($"  {chavePrimaria} INT,");
+                    sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
+                    sqlPesquisa.AppendLine($"  PRIMARY KEY ({chavePrimaria})");
+                    sqlPesquisa.AppendLine($")");
                     break;
                 default:
                     break;
