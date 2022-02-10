@@ -51,6 +51,7 @@ namespace MeusRendimentos.Infra.Database
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    sqlComando.AppendLine($"");
                     break;
                 default:
                     break;
@@ -75,6 +76,7 @@ namespace MeusRendimentos.Infra.Database
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    sqlComando.AppendLine($"CREATE DATABASE {nomeBanco};");
                     break;
                 default:
                     break;
@@ -94,11 +96,16 @@ namespace MeusRendimentos.Infra.Database
                 case TipoBanco.SqlServer:
                     sqlPesquisa.AppendLine($"SELECT NAME");
                     sqlPesquisa.AppendLine($"  FROM MASTER.DBO.SYSDATABASES");
-                    sqlPesquisa.AppendLine($"WHERE NAME = N'{nomeBanco}'");
+                    sqlPesquisa.AppendLine($" WHERE NAME = N'{nomeBanco}'");
                     break;
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    sqlPesquisa.AppendLine($"SELECT DATNAME");
+                    sqlPesquisa.AppendLine($"  FROM PG_DATABASE");
+                    sqlPesquisa.AppendLine($" WHERE DATISTEMPLATE = false");
+                    sqlPesquisa.AppendLine($"   AND lower(DATNAME) = lower('{nomeBanco}');");
+
                     break;
                 case TipoBanco.Sqlite:
                     var caminho = Path.Combine(Directory.GetCurrentDirectory(), nomeBanco);
@@ -139,11 +146,17 @@ namespace MeusRendimentos.Infra.Database
                 if (ServidorAtivo())
                 {
                     var nomeBanco = ObterNomeBanco();
-                    using var conexao = ConnectionConfiguration.ObterConexao(_tipoBanco);
+                    var conexao = ConnectionConfiguration.ObterConexao(_tipoBanco);
 
                     //Criar banco
                     if (!ExisteBanco(conexao, nomeBanco))
                         Criar(conexao, ObterSqlCriarBanco(nomeBanco));
+
+                    if(_tipoBanco == TipoBanco.Postgresql)
+                    {
+                        conexao.Close();
+                        conexao = ConnectionConfiguration.ObterConexao(_tipoBanco, true);
+                    }
 
                     //Criar tabelas
                     Criar(conexao, ObterProcedureDropConstraint(nomeBanco));
@@ -168,8 +181,8 @@ namespace MeusRendimentos.Infra.Database
                         Criar(conexao, GeradorDapper.InserirDadosPadroes<Tipo>());
                     if (!ExisteDados<Mes>(conexao))
                         Criar(conexao, GeradorDapper.InserirDadosPadroes<Mes>());
-
-
+                    
+                    conexao.Dispose();
                     //executar scripts da versao
                 }
                 else

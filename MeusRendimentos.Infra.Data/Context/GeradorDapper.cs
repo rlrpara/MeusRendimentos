@@ -72,20 +72,70 @@ namespace MeusRendimentos.Infra.Data.Context
         {
             return item.PropertyType.Name switch
             {
-                "Int32" => _tipoBanco == TipoBanco.MySql ? "int(11) DEFAULT NULL": "int NOT NULL DEFAULT 1",
+                "Int32" => ObterTipoRetorno(_tipoBanco),
                 "Int64" => "bigint DEFAULT NULL",
                 "Double" => "decimal(18,2)",
                 "Single" => "float",
-                "DateTime" => "datetime DEFAULT CURRENT_TIMESTAMP",
+                "DateTime" => ObterDataRetorno(_tipoBanco),
                 "Boolean" => _tipoBanco == TipoBanco.MySql ? "tinyint(1) NOT NULL DEFAULT 1" : "int NOT NULL DEFAULT 1",
                 "Nullable`1" => ObterParaTipoNulo(item.PropertyType.FullName),
                 _ => "varchar(255) NULL",
             };
         }
+
+        private static string ObterDataRetorno(TipoBanco tipoBanco)
+        {
+            return tipoBanco switch
+            {
+                TipoBanco.MySql => "datetime DEFAULT CURRENT_TIMESTAMP",
+                TipoBanco.SqlServer => "datetime DEFAULT CURRENT_TIMESTAMP",
+                TipoBanco.Firebird => "datetime DEFAULT CURRENT_TIMESTAMP",
+                TipoBanco.Postgresql => "date NULL DEFAULT CURRENT_TIMESTAMP",
+                TipoBanco.Sqlite => "datetime DEFAULT CURRENT_TIMESTAMP",
+                _ => "datetime DEFAULT CURRENT_TIMESTAMP",
+            };
+        }
+
+        private static string ObterTipoRetorno(TipoBanco tipoBanco)
+        {
+            return tipoBanco switch
+            {
+                TipoBanco.MySql => "int(11) DEFAULT NULL",
+                TipoBanco.SqlServer => "int NOT NULL DEFAULT 1",
+                TipoBanco.Firebird => "int(11) DEFAULT NULL",
+                TipoBanco.Postgresql => "int DEFAULT NULL",
+                TipoBanco.Sqlite => "int DEFAULT NULL",
+                _ => "int DEFAULT NULL",
+            };
+        }
+
         private static string ObterParaTipoNulo(string fullName)
         {
             if (fullName.Contains("Int32"))
-                return "int(11) DEFAULT NULL";
+            {
+                var retorno = string.Empty;
+                switch (_tipoBanco)
+                {
+                    case TipoBanco.MySql:
+                        retorno = "int(11) DEFAULT NULL";
+                        break;
+                    case TipoBanco.SqlServer:
+                        retorno = "int(11) DEFAULT NULL";
+                        break;
+                    case TipoBanco.Firebird:
+                        break;
+                    case TipoBanco.Postgresql:
+                        retorno = "int(11) DEFAULT NULL";
+                        break;
+                    case TipoBanco.Sqlite:
+                        retorno = "int DEFAULT NULL";
+                        break;
+                    default:
+                        retorno = "int(11) DEFAULT NULL";
+                        break;
+                }
+                return retorno;
+            }
             else if (fullName.Contains("DateTime"))
                 return "datetime DEFAULT NULL";
             else
@@ -403,6 +453,9 @@ namespace MeusRendimentos.Infra.Data.Context
                             case TipoBanco.Firebird:
                                 break;
                             case TipoBanco.Postgresql:
+                                sqlConstraint.AppendLine($"ALTER TABLE {ObterNomeTabela<T>()}");
+                                sqlConstraint.AppendLine($"ADD CONSTRAINT {nomeChave} FOREIGN KEY ({campoChaveEstrangeira})");
+                                sqlConstraint.AppendLine($"REFERENCES {nomeBanco}.{tabelaChaveEstrangeira} (ID) ON DELETE NO ACTION ON UPDATE NO ACTION;{Environment.NewLine}");
                                 break;
                             case TipoBanco.Sqlite:
                                 break;
@@ -447,10 +500,15 @@ namespace MeusRendimentos.Infra.Data.Context
                 case TipoBanco.Firebird:
                     break;
                 case TipoBanco.Postgresql:
+                    sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {ObterNomeTabela<T>()} (");
+                    sqlPesquisa.AppendLine($"  {chavePrimaria} int NOT NULL GENERATED ALWAYS AS IDENTITY,");
+                    sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
+                    sqlPesquisa.AppendLine($"  PRIMARY KEY ({chavePrimaria})");
+                    sqlPesquisa.AppendLine($")");
                     break;
                 case TipoBanco.Sqlite:
                     sqlPesquisa.AppendLine($"CREATE TABLE IF NOT EXISTS {ObterNomeTabela<T>()} (");
-                    sqlPesquisa.AppendLine($"  {chavePrimaria} INT,");
+                    sqlPesquisa.AppendLine($"  {chavePrimaria} int NOT NULL GENERATED ALWAYS AS IDENTITY,");
                     sqlPesquisa.AppendLine($"  {string.Join($",{Environment.NewLine}   ", campos.ToArray())},");
                     sqlPesquisa.AppendLine($"  PRIMARY KEY ({chavePrimaria})");
                     sqlPesquisa.AppendLine($")");

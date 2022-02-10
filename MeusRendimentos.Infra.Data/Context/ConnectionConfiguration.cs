@@ -21,8 +21,8 @@ namespace MeusRendimentos.Infra.Data.Context
         #endregion
 
         #region Métodos Públicos
-        public static IDbConnection ObterConexao(TipoBanco tipoBanco)
-            => Inicia(new DeafultSqlConnectionFactory(tipoBanco).Conexao());
+        public static IDbConnection ObterConexao(TipoBanco tipoBanco, bool adicionaBanco = false)
+            => Inicia(new DeafultSqlConnectionFactory(tipoBanco).Conexao(adicionaBanco));
         #endregion
     }
 }

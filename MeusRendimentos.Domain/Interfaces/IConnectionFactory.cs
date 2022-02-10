@@ -1,10 +1,9 @@
-﻿using MeusRendimentos.Domain.Enumerables;
-using System.Data;
+﻿using System.Data;
 
 namespace MeusRendimentos.Domain.Interfaces
 {
     public interface IConnectionFactory
     {
-        IDbConnection Conexao();
+        IDbConnection Conexao(bool adicionaBanco = false);
     }
 }
