@@ -42,78 +42,77 @@ namespace MeusRendimentos.Infra.Data.Repositories
         #endregion
 
         #region [Métodos Públicos]
-        public int Adicionar<TEntity>(TEntity entidade) where TEntity : class
+        public int Adicionar<T>(T entidade) where T : class
         {
             return _conexao.Execute(GeradorDapper.RetornaInsert(entidade));
         }
-
-        public int Atualizar<TEntity>(int id, TEntity entidade) where TEntity : class
+        public int Atualizar<T>(int id, T entidade) where T : class
         {
             return _conexao.Execute(GeradorDapper.RetornaUpdate(id, entidade));
         }
-
-        public TEntity BuscarPorId<TEntity>(int id) where TEntity : class
+        public void AtualizarPorQuery<T>(string query)
         {
-            return _conexao.QueryFirstOrDefault<TEntity>($"{GeradorDapper.RetornaSelect<TEntity>(id)}", commandTimeout: 80000000, commandType: CommandType.Text);
+            _conexao.Query<T>(query, commandTimeout: 80000000, commandType: CommandType.Text);
+        }
+        public T BuscarPorId<T>(int id) where T : class
+        {
+            return _conexao.QueryFirstOrDefault<T>($"{GeradorDapper.RetornaSelect<T>(id)}", commandTimeout: 80000000, commandType: CommandType.Text);
         }
 
-        public TEntity BuscarPorQuery<TEntity>(string query) where TEntity : class
+        public T BuscarPorQuery<T>(string query) where T : class
         {
-            return _conexao.QueryFirstOrDefault<TEntity>(query, commandTimeout: 80000000, commandType: CommandType.Text);
+            return _conexao.QueryFirstOrDefault<T>(query, commandTimeout: 80000000, commandType: CommandType.Text);
         }
 
-        public TEntity BuscarPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class
+        public T BuscarPorQueryGerador<T>(string sqlWhere = null) where T : class
         {
             StringBuilder sqlPesquisa = new StringBuilder()
-                .AppendLine($"{GeradorDapper.RetornaSelect<TEntity>()}");
+                .AppendLine($"{GeradorDapper.RetornaSelect<T>()}");
 
             if (!string.IsNullOrEmpty(sqlWhere)) sqlPesquisa.Append($"AND {sqlWhere}");
 
-            return _conexao.Query<TEntity>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text).FirstOrDefault();
+            return _conexao.Query<T>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text).FirstOrDefault();
         }
 
-        public IEnumerable<TEntity> BuscarTodosPorQuery<TEntity>(string query = null) where TEntity : class
+        public IEnumerable<T> BuscarTodosPorQuery<T>(string query = null) where T : class
         {
             StringBuilder sqlPesquisa = new StringBuilder();
 
             if (string.IsNullOrEmpty(query))
-                sqlPesquisa.AppendLine($"{GeradorDapper.RetornaSelect<TEntity>()}");
+                sqlPesquisa.AppendLine($"{GeradorDapper.RetornaSelect<T>()}");
             else
             {
                 sqlPesquisa.AppendLine($"USE {_nomeBanco};");
                 sqlPesquisa.AppendLine($"{query.Trim()}");
             }
 
-            return _conexao.Query<TEntity>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text);
+            return _conexao.Query<T>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text);
         }
 
-        public IEnumerable<TEntity> BuscarTodosPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class
+        public IEnumerable<T> BuscarTodosPorQueryGerador<T>(string sqlWhere = null) where T : class
         {
-            StringBuilder sqlPesquisa = new StringBuilder().Append($"{GeradorDapper.RetornaSelect<TEntity>()}");
+            StringBuilder sqlPesquisa = new StringBuilder().Append($"{GeradorDapper.RetornaSelect<T>()}");
             if (!string.IsNullOrEmpty(sqlWhere)) sqlPesquisa.Append($"AND {sqlWhere}");
 
-            return _conexao.Query<TEntity>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text).ToList();
+            return _conexao.Query<T>(sqlPesquisa.ToString(), commandTimeout: 80000000, commandType: CommandType.Text).ToList();
         }
 
-        public int Excluir<TEntity>(int id) where TEntity : class
+        public int Excluir<T>(int id) where T : class
         {
-            return _conexao.Execute($"{GeradorDapper.RetornaDelete<TEntity>(id)}");
+            return _conexao.Execute($"{GeradorDapper.RetornaDelete<T>(id)}");
         }
-
-        public List<TEntity> Query<TEntity>(string where) where TEntity : class
+        public List<T> Query<T>(string where) where T : class
         {
-            return _conexao.Query<TEntity>(where, commandTimeout: 80000000, commandType: CommandType.Text).ToList();
+            return _conexao.Query<T>(where, commandTimeout: 80000000, commandType: CommandType.Text).ToList();
         }
-
+        public int ObterUltimoRegistro<T>() where T : class
+        {
+            return _conexao.QueryFirst<int>($"SELECT ID FROM {ObterNomeTabela<T>()} ORDER BY ID DESC LIMIT 1");
+        }
         public void Dispose()
         {
             _conexao.Close();
             _conexao.Dispose();
-        }
-
-        public int ObterUltimoRegistro<TEntity>() where TEntity : class
-        {
-            return _conexao.QueryFirst<int>($"SELECT ID FROM {ObterNomeTabela<TEntity>()} ORDER BY ID DESC LIMIT 1");
         }
         #endregion
     }

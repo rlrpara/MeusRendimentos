@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using MeusRendimentos.Domain.Entities;
 using MeusRendimentos.Domain.Interfaces;
+using MeusRendimentos.Infra.Utilities.ExtensionMethods;
 using MeusRendimentos.Services.Interfaces;
 using MeusRendimentos.Services.Models;
-using MeusRendimentos.Infra.Utilities.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -67,6 +67,11 @@ namespace MeusRendimentos.Services.Services
                 throw new ArgumentException("Código não informado.");
 
             return (_repositorio.Excluir<Categoria>(int.Parse(id)) > 0);
+        }
+
+        public CategoriaModel ObterTodosServicos()
+        {
+            return _mapper.Map<CategoriaModel>(_repositorio.ObterCategoriaCompleta());
         }
         #endregion
     }

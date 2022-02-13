@@ -13,7 +13,7 @@ namespace MeusRendimentos.Services.Services
             _baseRepository = repositorio;
         }
 
-        public int Adicionar<TEntity>(TEntity entidade) where TEntity : class
+        public int Adicionar<T>(T entidade) where T : class
         {
             try
             {
@@ -25,7 +25,7 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public int Atualizar<TEntity>(int id, TEntity entidade) where TEntity : class
+        public int Atualizar<T>(int id, T entidade) where T : class
         {
             try
             {
@@ -36,12 +36,15 @@ namespace MeusRendimentos.Services.Services
                 return default(dynamic);
             }
         }
-
-        public TEntity BuscarPorId<TEntity>(int id) where TEntity : class
+        public void AtualizarPorQuery<T>(string query)
+        {
+            _baseRepository.AtualizarPorQuery<T>(query);
+        }
+        public T BuscarPorId<T>(int id) where T : class
         {
             try
             {
-                return _baseRepository.BuscarPorId<TEntity>(id);
+                return _baseRepository.BuscarPorId<T>(id);
             }
             catch
             {
@@ -49,11 +52,11 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public TEntity BuscarPorQuery<TEntity>(string query) where TEntity : class
+        public T BuscarPorQuery<T>(string query) where T : class
         {
             try
             {
-                return _baseRepository.BuscarPorQuery<TEntity>(query);
+                return _baseRepository.BuscarPorQuery<T>(query);
             }
             catch
             {
@@ -61,11 +64,11 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public TEntity BuscarPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class
+        public T BuscarPorQueryGerador<T>(string sqlWhere = null) where T : class
         {
             try
             {
-                return _baseRepository.BuscarPorQueryGerador<TEntity>(sqlWhere);
+                return _baseRepository.BuscarPorQueryGerador<T>(sqlWhere);
             }
             catch
             {
@@ -73,11 +76,11 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public IEnumerable<TEntity> BuscarTodosPorQuery<TEntity>(string query = null) where TEntity : class
+        public IEnumerable<T> BuscarTodosPorQuery<T>(string query = null) where T : class
         {
             try
             {
-                return _baseRepository.BuscarTodosPorQuery<TEntity>(query);
+                return _baseRepository.BuscarTodosPorQuery<T>(query);
             }
             catch
             {
@@ -85,11 +88,11 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public IEnumerable<TEntity> BuscarTodosPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class
+        public IEnumerable<T> BuscarTodosPorQueryGerador<T>(string sqlWhere = null) where T : class
         {
             try
             {
-                return _baseRepository.BuscarTodosPorQueryGerador<TEntity>(sqlWhere);
+                return _baseRepository.BuscarTodosPorQueryGerador<T>(sqlWhere);
             }
             catch
             {
@@ -97,31 +100,29 @@ namespace MeusRendimentos.Services.Services
             }
         }
 
-        public int Excluir<TEntity>(int id) where TEntity : class
+        public int Excluir<T>(int id) where T : class
         {
             try
             {
-                return _baseRepository.Excluir<TEntity>(id);
+                return _baseRepository.Excluir<T>(id);
             }
             catch
             {
                 return default(dynamic);
             }
         }
-
-        public List<TEntity> Query<TEntity>(string where) where TEntity : class
+        public List<T> Query<T>(string where) where T : class
         {
-            return _baseRepository.Query<TEntity>(where);
+            return _baseRepository.Query<T>(where);
         }
-
+        public int ObterUltimoRegistro<T>() where T : class
+        {
+            return _baseRepository.ObterUltimoRegistro<T>();
+        }
         public void Dispose()
         {
             _baseRepository.Dispose();
         }
 
-        public int ObterUltimoRegistro<TEntity>() where TEntity : class
-        {
-            return _baseRepository.ObterUltimoRegistro<TEntity>();
-        }
     }
 }

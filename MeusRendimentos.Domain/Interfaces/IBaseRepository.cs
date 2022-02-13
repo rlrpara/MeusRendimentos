@@ -5,15 +5,16 @@ namespace MeusRendimentos.Domain.Interfaces
 {
     public interface IBaseRepository : IDisposable
     {
-        List<TEntity> Query<TEntity>(string where) where TEntity : class;
-        TEntity BuscarPorId<TEntity>(int id) where TEntity : class;
-        TEntity BuscarPorQuery<TEntity>(string query) where TEntity : class;
-        TEntity BuscarPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class;
-        IEnumerable<TEntity> BuscarTodosPorQuery<TEntity>(string query = null) where TEntity : class;
-        IEnumerable<TEntity> BuscarTodosPorQueryGerador<TEntity>(string sqlWhere = null) where TEntity : class;
-        int Adicionar<TEntity>(TEntity entidade) where TEntity : class;
-        int Atualizar<TEntity>(int id, TEntity entidade) where TEntity : class;
-        int Excluir<TEntity>(int id) where TEntity : class;
-        int ObterUltimoRegistro<TEntity>() where TEntity : class;
+        List<T> Query<T>(string where) where T : class;
+        T BuscarPorId<T>(int id) where T : class;
+        T BuscarPorQuery<T>(string query) where T : class;
+        T BuscarPorQueryGerador<T>(string sqlWhere = null) where T : class;
+        IEnumerable<T> BuscarTodosPorQuery<T>(string query = null) where T : class;
+        IEnumerable<T> BuscarTodosPorQueryGerador<T>(string sqlWhere = null) where T : class;
+        int Adicionar<T>(T entidade) where T : class;
+        int Atualizar<T>(int id, T entidade) where T : class;
+        void AtualizarPorQuery<T>(string query);
+        int Excluir<T>(int id) where T : class;
+        int ObterUltimoRegistro<T>() where T : class;
     }
 }
