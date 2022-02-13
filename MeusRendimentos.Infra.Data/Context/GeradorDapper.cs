@@ -18,17 +18,15 @@ namespace MeusRendimentos.Infra.Data.Context
         #endregion
 
         #region Métodos Privados
-        public static string ObterColunasGrid<T>(IEnumerable<T> list) where T : class
+        public static string ObterColunasGrid<T>(IEnumerable<T> listaGrid) where T : class
         {
-            string chavePrimaria = string.Empty;
             List<string> campos = new List<string>();
-
-            foreach (var lista in list)
+            foreach (var lista in listaGrid)
             {
-                foreach (var item in lista.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
+                foreach (var item in lista.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
                 {
-                    var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
-                    if (opcoesBase != null && (opcoesBase.UsarParaBuscar && item.GetCustomAttribute<ColumnAttribute>().Name != ""))
+                    var opcoesBase = item.GetCustomAttribute(typeof(OpcoesBaseAttribute)) as OpcoesBaseAttribute;
+                    if (opcoesBase != null && (opcoesBase.UsarParaBuscar && !string.IsNullOrWhiteSpace(item.GetCustomAttribute<ColumnAttribute>().Name)))
                             campos.Add($"{item.GetCustomAttribute<ColumnAttribute>().Name}|{item.Name}|{opcoesBase.TamanhoColunaGrid}|{opcoesBase.UsarNaGrid}");
                 }
                 break;
@@ -43,7 +41,7 @@ namespace MeusRendimentos.Infra.Data.Context
             string chavePrimaria = string.Empty;
             List<string> campos = new List<string>();
 
-            foreach (var item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault()).Order))
+            foreach (var item in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).OrderBy(p => ((ColumnAttribute)p.GetCustomAttributes(typeof(ColumnAttribute)).FirstOrDefault())?.Order))
             {
                 var opcoesBase = (OpcoesBaseAttribute)item.GetCustomAttribute(typeof(OpcoesBaseAttribute));
                 if (opcoesBase != null)

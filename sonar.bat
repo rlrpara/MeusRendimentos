@@ -1,0 +1,3 @@
+dotnet sonarscanner begin /k:"MeusRendimentos" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="7253e242bbe6d606a30bf52de055270612581382" /d:sonar.cs.opencover.reportsPaths=".\MeusRendimentos.Test\coverage.opencover.xml"
+dotnet test .\MeusRendimentos.Test\MeusRendimentos.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+dotnet sonarscanner end /d:sonar.login="7253e242bbe6d606a30bf52de055270612581382"
