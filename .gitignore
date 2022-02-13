@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /MeusRendimentos/.env
 /.sonarqube/conf
+/sonar.bat
