@@ -32,4 +32,10 @@ pipeline {
             bat "msbuild $(workspace)\\MeusRendimentos.sln /nologo /nr:false /p:platform=\"Any CPU\" /p:configuration=\"release\" /t:clean;restore;rebuild"
         }
     }
+
+    stage('Running unit tests') {
+        steps {
+            bat "dotnet test $(workspace)\\MeusRendimentos.sln"
+        }
+    }
 }
