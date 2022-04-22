@@ -43,7 +43,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Utili
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.06-Auth", "04.06-Auth", "{3B66891A-C551-4C6D-8188-A34F6317310C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeusRendimentos.Infra.Auth", "MeusRendimentos.Infra.Auth\MeusRendimentos.Infra.Auth.csproj", "{7A1BD6C9-C227-40C5-83A0-7D21EC1410C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Auth", "MeusRendimentos.Infra.Auth\MeusRendimentos.Infra.Auth.csproj", "{7A1BD6C9-C227-40C5-83A0-7D21EC1410C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jenkins", "Jenkins", "{578DFF2D-FC74-4BEF-9D31-76EB424153A5}"
+	ProjectSection(SolutionItems) = preProject
+		Jenkins\Jenkinsfile.txt = Jenkins\Jenkinsfile.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

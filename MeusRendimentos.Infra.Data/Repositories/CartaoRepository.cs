@@ -4,5 +4,8 @@ namespace MeusRendimentos.Infra.Data.Repositories
 {
     public class CartaoRepository : BaseRepository, ICartaoRepository
     {
+        public CartaoRepository()
+        {
+        }
     }
 }
