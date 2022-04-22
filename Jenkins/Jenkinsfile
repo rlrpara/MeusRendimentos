@@ -1,14 +1,35 @@
 #!/usr/bin/env groovy
 pipeline {
-	agent none
-	stages {
-		stage('Build') {
-			agent {
-				docker { image 'maven'}
-			}
-			steps {
-				sh "mvn package -Dmaven.test.skip=true"
-			}
-		}
-	}
+    agent any
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                CleanWs()
+            }
+        }
+    }
+
+    stage ('Got Checkout') {
+        steps {
+            git branch: 'main', credentialsId: 'rlr.para@gmail.com', url: 'https://github.com/rlrpara/MeusRendimentos.git'
+        }
+    }
+
+    stage('Restore Packages') {
+        steps {
+            bat "msbuild /t:restore $(workspace)\\MeusRendimentos.sln"
+        }
+    }
+
+    stage('Clean') {
+        steps {
+            bat "msbuild $(workspace)\\MeusRendimentos.sln /nologo /nr:false /p:platform=\"Any CPU\" /p:configuration=\"release\" /t:clean"
+        }
+    }
+
+    stage('Build') {
+        steps {
+            bat "msbuild $(workspace)\\MeusRendimentos.sln /nologo /nr:false /p:platform=\"Any CPU\" /p:configuration=\"release\" /t:clean;restore;rebuild"
+        }
+    }
 }

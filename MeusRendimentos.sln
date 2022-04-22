@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeusRendimentos.Infra.Auth"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jenkins", "Jenkins", "{578DFF2D-FC74-4BEF-9D31-76EB424153A5}"
 	ProjectSection(SolutionItems) = preProject
-		Jenkins\Jenkinsfile.txt = Jenkins\Jenkinsfile.txt
+		Jenkins\Jenkinsfile = Jenkins\Jenkinsfile
 	EndProjectSection
 EndProject
 Global
